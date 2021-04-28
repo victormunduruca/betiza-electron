@@ -20,6 +20,8 @@ const { Title } = Typography;
     }
 */
 let index = 0; //TODO Delete
+const fs = window.require('fs');
+
 
 export default function QuizCreator() {
     const [questions, setQuestions] = useState([{key: index, stimulus: {}, answers: []}]);     //Array of questions objects
@@ -43,9 +45,10 @@ export default function QuizCreator() {
         setAnswersContent(getQuestion(selectedQuestionKey).answers.map(answer => answer.value)); //Puts an array of selected question's answers to answers content array
     }
 
+    const [questionsString, setQuestionString] = useState("");
     useEffect(() => {
-        console.log(getQuestion(selectedQuestionKey));
-    }, [selectedQuestionKey, setSelectedQuestionKey, questions])
+        setQuestionString(JSON.stringify(questions));
+    }, [questions])
 
 
     // useEffect(() => {
@@ -79,6 +82,7 @@ export default function QuizCreator() {
 
     return (
         <Layout>
+            <Button onClick={fs.writeFileSync('questions.json', questionsString)}>CLica pra salvar</Button>
             <PageHeader
                 ghost={false}
                 onBack={() => window.history.back()}

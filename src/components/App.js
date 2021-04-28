@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import Answers from "./Answers";
-import { Layout} from 'antd';
+import { Layout, Button} from 'antd';
 import QuizCreator from "./QuizCreator";
 import Stimulus from "./Stimulus";
 import QuizElement from "./QuizElement";

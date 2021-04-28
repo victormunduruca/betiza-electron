@@ -1,6 +1,6 @@
 const path = require("path");
 
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow} = require("electron");
 const isDev = require("electron-is-dev");
 
 // Conditionally include the dev tools installer to load React Dev Tools
@@ -17,13 +17,18 @@ if (require("electron-squirrel-startup")) {
   app.quit();
 }
 
+const fs = require('fs');
+
+
+console.log("ALO ALO RAPEIZE");
+
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
     }
   });
 
@@ -38,7 +43,13 @@ function createWindow() {
   if (isDev) {
     win.webContents.openDevTools({ mode: "detach" });
   }
+
+
+
 }
+
+try { fs.writeFileSync('myfile.txt', 'the text to write in the file', 'utf-8'); }
+catch(e) { alert('Failed to save the file !'); }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
