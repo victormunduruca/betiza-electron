@@ -25,6 +25,7 @@ const fs = window.require('fs');
 
 export default function QuizCreator(props) {
     const [questions, setQuestions] = useState(props.questions);     //Array of questions objects
+   // const [questions, setQuestions] = useState([{key: index, stimulus: {}, answers: []}]);     //Array of questions objects
     const [answersContent, setAnswersContent] = useState([]); // Keeps track of answers input 
     const [stimulusContent, setStimulusContent] = useState(""); // Keeps track of stimulus input
     
@@ -48,7 +49,7 @@ export default function QuizCreator(props) {
     const [questionsString, setQuestionString] = useState("");
     useEffect(() => {
         setQuestionString(JSON.stringify(questions));
-    }, [questions])
+    }, [questions, answersContent, stimulusContent])
 
 
     // useEffect(() => {

@@ -22,7 +22,7 @@ export default function App() {
     return (
         <Layout>
             {/* <Header />  */}
-            <QuizCreator questions={questions} />
+            <QuizCreator questions={questions}/>
 
             {/* <Content style={{ padding: '0 300px' }}>
                 <QuizElement type="text" content="teste"/> 
