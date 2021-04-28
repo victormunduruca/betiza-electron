@@ -14,7 +14,7 @@ const { Title } = Typography;
 
 
 /*
-    const question = {
+    const question = {  
         key: 0
         answers: [{key: 0, type: "", content: ""}]
     }
@@ -23,8 +23,8 @@ let index = 0; //TODO Delete
 const fs = window.require('fs');
 
 
-export default function QuizCreator() {
-    const [questions, setQuestions] = useState([{key: index, stimulus: {}, answers: []}]);     //Array of questions objects
+export default function QuizCreator(props) {
+    const [questions, setQuestions] = useState(props.questions);     //Array of questions objects
     const [answersContent, setAnswersContent] = useState([]); // Keeps track of answers input 
     const [stimulusContent, setStimulusContent] = useState(""); // Keeps track of stimulus input
     
