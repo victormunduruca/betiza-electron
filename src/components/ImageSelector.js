@@ -29,6 +29,7 @@ export default function ImageSelector(props) {
     return (
         <>
             <Button onClick={openDialog}> Clique para selecionar imagem</Button>
+            {props.value != "" ? <img src={props.value}></img> : "Nenhuma imagem selecionada"}
         </>
     );
 }

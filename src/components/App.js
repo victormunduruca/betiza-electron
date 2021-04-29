@@ -47,8 +47,7 @@ export default function App() {
     const [imgSrc, setImgSrc] = useState("");
     return (
         <Layout>
-        <ImageSelector onImageReady={(value) => setImgSrc(value)} />
-        <img src={imgSrc}></img>
+        <ImageSelector onImageReady={(value) => setImgSrc(value)} value={imgSrc}/>
             {/* <input type="file"
        id="avatar" name="avatar"
        accept="image/png, image/jpeg" onChange={(e) => console.log(e.target.value)}></input> */}
