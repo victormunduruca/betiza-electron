@@ -25,7 +25,6 @@ const fs = window.require('fs');
 
 export default function QuizCreator(props) {
     const [questions, setQuestions] = useState(props.questions);     //Array of questions objects
-   // const [questions, setQuestions] = useState([{key: index, stimulus: {}, answers: []}]);     //Array of questions objects
     const [answersContent, setAnswersContent] = useState([]); // Keeps track of answers input 
     const [stimulusContent, setStimulusContent] = useState(""); // Keeps track of stimulus input
     
@@ -45,6 +44,11 @@ export default function QuizCreator(props) {
         setStimulusContent(getQuestion(selectedQuestionKey).stimulus.value);
         setAnswersContent(getQuestion(selectedQuestionKey).answers.map(answer => answer.value)); //Puts an array of selected question's answers to answers content array
     }
+
+    useEffect(() => {
+        console.log(props.questions);
+        onSelectedQuestionChange({key: 0}); //Loads questions from file if applicable 
+    }, []);
 
     const [questionsString, setQuestionString] = useState("");
     useEffect(() => {

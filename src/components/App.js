@@ -12,14 +12,14 @@ const fs = window.require('fs');
 
 export default function App() { 
     let rawdata, questions;
+    
     try {
-        rawdata = fs.readFileSync('chewy.json');
+        rawdata = fs.readFileSync('questions3.json');
         questions = JSON.parse(rawdata);
     } catch {
         console.log("file not found");
-        questions = [{key: 0, stimulus: {}, answers: []}];
+        questions = [{key: 0, stimulus: {type: "", value: ""}, answers: []}];
     }
-    
     
     // useEffect(() => {
     //     fs.readFile('student.json', (err, data) => {
