@@ -12,27 +12,12 @@ const { Head, Footer, Sider, Content } = Layout;
 const fs = window.require('fs');
 const { dialog } = window.require("electron").remote;
 
-// dialog.showOpenDialog(window.require('electron').remote.getCurrentWindow(),
-//    {
-//     filters: [
-//       {name: 'Images', extensions: ['png']}
-//     ]
-//    }, 
-//    function(result) {
-//     console.log("Disgracaaaaa");
-//     console.log(result);
-//     //  //read image (note: use async in production)
-//     //  var _img = fs.readFileSync(filepaths[0]).toString('base64');
-//     //  //example for .png
-//     //  src = "data:image/png;base64," + _img;
-//     //  console.log(src);
-// });
-
-//console.log(dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] }))
-
 export default function App() { 
     const [filePath, setFilePath] = useState(""); 
+    const [img64, setImg64] = useState("");
+
     function openDialog() {
+        console.log("VIROU PALHAÇADA?");
         dialog.showOpenDialog({
             properties: ['openFile', 'openDirectory']
         }).then(result => {
@@ -43,7 +28,10 @@ export default function App() {
             console.log(err)
         })
     }
-    
+
+    useEffect(() => {
+            setImg64(fs.readFileSync("/Users/victormunduruca/Downloads/gatito.jpeg").toString('base64'));
+    }, []);
     let rawdata, questions;
 
     try {
@@ -53,9 +41,11 @@ export default function App() {
         console.log("file not found");
         questions = [{key: 0, stimulus: {type: "", value: ""}, answers: []}];
     }
+
     return (
         <Layout>
         <h1>{filePath}</h1>
+        <img src={"data:image/png;base64,"+ img64}></img>
         <Button onClick={openDialog}>Escolher arquivos</Button>
             {/* <input type="file"
        id="avatar" name="avatar"
