@@ -30,8 +30,10 @@ export default function App() {
     }
 
     useEffect(() => {
-            setImg64(fs.readFileSync("/Users/victormunduruca/Downloads/gatito.jpeg").toString('base64'));
-    }, []);
+        if(filePath !== "") {
+            setImg64(fs.readFileSync(filePath[0]).toString('base64'));
+        }
+    }, [filePath]);
     let rawdata, questions;
 
     try {
