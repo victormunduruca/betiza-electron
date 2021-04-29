@@ -1,6 +1,6 @@
 const path = require("path");
 
-const { app, BrowserWindow} = require("electron");
+const { app, BrowserWindow, dialog} = require("electron");
 const isDev = require("electron-is-dev");
 
 // Conditionally include the dev tools installer to load React Dev Tools
@@ -21,6 +21,7 @@ const fs = require('fs');
 
 
 console.log("ALO ALO RAPEIZE");
+
 
 function createWindow() {
   // Create the browser window.
@@ -56,6 +57,15 @@ catch(e) { alert('Failed to save the file !'); }
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
+  // dialog.showOpenDialog({
+  //   properties: ['openFile', 'openDirectory']
+  // }).then(result => {
+  //   console.log(result.canceled)
+  //   console.log(result.filePaths)
+  // }).catch(err => {
+  //   console.log(err)
+  // })
+  
 
   if (isDev) {
     installExtension(REACT_DEVELOPER_TOOLS)
