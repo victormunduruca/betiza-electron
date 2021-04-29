@@ -1,1 +1,1 @@
-[{"key":0,"stimulus":{"type":"text","value":"1"},"answers":[{"key":0,"type":"text","value":"1"},{"key":1,"type":"text","value":"1"},{"key":2,"type":"text","value":"1"},{"key":3,"type":"text","value":"1"}]},{"key":1,"stimulus":{"type":"text","value":"AAAAA"},"answers":[{"key":0,"type":"text","value":"2"},{"key":1,"type":"text","value":"2"},{"key":2,"type":"text","value":"2"},{"key":3,"type":"text","value":"2"}]}]
+[{"key":0,"stimulus":{},"answers":[]},{"key":1,"stimulus":{},"answers":[]}]

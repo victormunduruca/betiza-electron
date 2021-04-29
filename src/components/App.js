@@ -9,9 +9,18 @@ const { Head, Footer, Sider, Content } = Layout;
 
 //[questions, setQuestions] = useState("");
 const fs = window.require('fs');
+
 export default function App() { 
-    let rawdata = fs.readFileSync('questions.json');
-    let questions = JSON.parse(rawdata);
+    let rawdata, questions;
+    try {
+        rawdata = fs.readFileSync('chewy.json');
+        questions = JSON.parse(rawdata);
+    } catch {
+        console.log("file not found");
+        questions = [{key: 0, stimulus: {}, answers: []}];
+    }
+    
+    
     // useEffect(() => {
     //     fs.readFile('student.json', (err, data) => {
     //         if (err) throw err;
