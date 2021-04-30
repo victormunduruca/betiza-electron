@@ -13,12 +13,7 @@ const { Title } = Typography;
 
 
 
-/*
-    const question = {  
-        key: 0
-        answers: [{key: 0, type: "", content: ""}]
-    }
-*/
+
 let index = 0; //TODO Delete
 const fs = window.require('fs');
 
@@ -27,7 +22,9 @@ export default function QuizCreator(props) {
     const [questions, setQuestions] = useState(props.questions);     //Array of questions objects
     const [answersContent, setAnswersContent] = useState([]); // Keeps track of answers input 
     const [stimulusContent, setStimulusContent] = useState(""); // Keeps track of stimulus input
-    
+    const [stimulusType, setStimulusType] = useState("text"); // Keeps track of stimulus radio button
+    const [answerType, setAnswerType] = useState("text"); // Keeps track of stimulus radio button
+
     const [selectedQuestionKey, setSelectedQuestionKey] = useState(0);
 
     function addQuestion() {
@@ -40,6 +37,8 @@ export default function QuizCreator(props) {
     //onChangeSelectedQuestion -> update view from the array
     function onSelectedQuestionChange(e) {
         let selectedQuestionKey = e.key;
+        //Set Stimulus and Answer radios
+        //If Stimulus type is the same as 
         setSelectedQuestionKey(selectedQuestionKey);
         setStimulusContent(getQuestion(selectedQuestionKey).stimulus.value);
         setAnswersContent(getQuestion(selectedQuestionKey).answers.map(answer => answer.value)); //Puts an array of selected question's answers to answers content array
@@ -47,21 +46,13 @@ export default function QuizCreator(props) {
 
     useEffect(() => {
         console.log(props.questions);
-        onSelectedQuestionChange({key: 0}); //Loads questions from file if applicable 
+        onSelectedQuestionChange({key: 0}); //Loads questions from file if applicable TODO trocar
     }, []);
 
     const [questionsString, setQuestionString] = useState("");
     useEffect(() => {
         setQuestionString(JSON.stringify(questions));
     }, [questions, answersContent, stimulusContent])
-
-
-    // useEffect(() => {
-    //     let test = questions.find((question) => {
-    //         return question.key === selectedQuestionKey;
-    //     });
-    //     console.log(test);
-    // }, [selectedQuestionKey, questions])
 
     function onAnswerChange(answerValue, answerKey, answerType) {
         getQuestion(selectedQuestionKey).answers[answerKey] = {key: answerKey, type: answerType, value: answerValue}; //Changes value of one of 4 fixed ansewers
@@ -77,6 +68,14 @@ export default function QuizCreator(props) {
         console.log(stimulusValue);
     }
 
+    function onStimulusTypeChange(stimulusType) {
+        setStimulusType(stimulusType);
+    }
+
+    function onAnswerTypeChange(answerType) {
+        setAnswerType(answerType);
+    }
+
     function getQuestion(key) {
         return questions.find((question) => {
             return question.key == key;
@@ -87,7 +86,7 @@ export default function QuizCreator(props) {
 
     return (
         <Layout>
-            <Button onClick={fs.writeFileSync('questions.json', questionsString)}>CLica pra salvar</Button>
+            {/* <Button onClick={fs.writeFileSync('questions.json', questionsString)}>CLica pra salvar</Button> */}
             <PageHeader
                 ghost={false}
                 onBack={() => window.history.back()}
@@ -102,9 +101,8 @@ export default function QuizCreator(props) {
             <Layout>
                 <SideBar questions={questions} onAddQuestion={addQuestion} onSelectedQuestionChange={onSelectedQuestionChange}/>
                 <Content>
-                    <h1>{selectedQuestionKey}</h1>
-                    <StimulusCreationArea onStimulusChange={onStimulusChange} value={stimulusContent}/>
-                    <AnswerCreationArea onAnswerChange={onAnswerChange} value={answersContent}/>
+                    <StimulusCreationArea onStimulusChange={onStimulusChange} value={stimulusContent} stimulusType={stimulusType} onStimulusTypeChange={onStimulusTypeChange}/>
+                    <AnswerCreationArea onAnswerChange={onAnswerChange} value={answersContent} answerType={answerType} onAnswerTypeChange={onAnswerTypeChange}/>
                 </Content>
             </Layout>
         </Layout>

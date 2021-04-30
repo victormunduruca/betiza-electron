@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Card , Input, Checkbox} from 'antd';
 import FileDragger from "./FileDragger";
+import ImageSelector from "./ImageSelector";
 
 export default function AnswerCreator(props){
     function onCheckboxChange(e) {
@@ -18,7 +19,7 @@ export default function AnswerCreator(props){
         case "image":
             answer =    <Card className="answer-item" bordered={true}>
                                 <Checkbox onChange={onCheckboxChange}></Checkbox>
-                                <FileDragger /> 
+                                <ImageSelector onImageReady={(imgSrc) => props.onChange(imgSrc)} value={props.value}/> 
                             </Card>;
             break
         case "sound":
