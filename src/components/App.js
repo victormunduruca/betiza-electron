@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { Layout, Button} from 'antd';
 import QuizCreator from "./QuizCreator";
+import AudioSelector from "./AudioSelector";
 
 
 
@@ -24,7 +25,8 @@ export default function App() {
        id="avatar" name="avatar"
        accept="image/png, image/jpeg" onChange={(e) => console.log(e.target.value)}></input> */}
             {/* <Header />  */}
-            <QuizCreator questions={questions}/>
+            {/* <QuizCreator questions={questions}/> */}
+            <AudioSelector />
 
             {/* <Content style={{ padding: '0 300px' }}>
                 <QuizElement type="text" content="teste"/> 
