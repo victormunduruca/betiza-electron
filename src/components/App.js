@@ -15,7 +15,7 @@ export default function App() {
         questions = JSON.parse(rawdata);
     } catch {
         console.log("file not found");
-        questions = [{key: 0, stimulus: "", stimulusType: "text", answers: [], answersType: "text"}];
+        questions = [{key: 0, stimulus: "", stimulusType: "text", answers: [], answerType: "text"}];
     }
     return (
         <Layout>

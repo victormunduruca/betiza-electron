@@ -31,7 +31,7 @@ export default function QuizCreator(props) {
         //create new question component
         index+=1;
         setQuestions(prevQuestions => {
-            return [...prevQuestions, {key: index, stimulus: "", stimulusType: "text", answers: [], answersType: "text"}]; //Add new empty question to questions
+            return [...prevQuestions, {key: index, stimulus: "", stimulusType: "text", answers: [], answerType: "text"}]; //Add new empty question to questions
         })
     }
     //onChangeSelectedQuestion -> update view from the array or file
@@ -61,22 +61,22 @@ export default function QuizCreator(props) {
 
         let answersContentCopy = [...answersContent]; //Makes a copy of answer array and updates the value of state at that index
         answersContentCopy[answerKey] = answerValue; 
-        setAnswersContent(answersContentCopy); 
-        setAnswerType(answerType); 
+        setAnswersContent(answersContentCopy);  
     }   
 
     function onStimulusChange(stimulusValue, stimulusType) {
         getQuestion(selectedQuestionKey).stimulus = stimulusValue;  //Add stimulus to question array
-        getQuestion(selectedQuestionKey).stimulusType = stimulusType; //Sets selected question's type as the current stimulusType
         setStimulusContent(stimulusValue);
         console.log(stimulusValue);
     }
 
     function onStimulusTypeChange(stimulusType) {
+        getQuestion(selectedQuestionKey).stimulusType = stimulusType; //Sets selected question's type as the current stimulusType
         setStimulusType(stimulusType);
     }
 
     function onAnswerTypeChange(answerType) {
+        getQuestion(selectedQuestionKey).answerType = answerType;
         setAnswerType(answerType);
     }
 
