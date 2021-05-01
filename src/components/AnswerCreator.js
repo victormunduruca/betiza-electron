@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card , Input, Checkbox} from 'antd';
 import FileDragger from "./FileDragger";
 import ImageSelector from "./ImageSelector";
+import AudioSelector from "./AudioSelector";
 
 export default function AnswerCreator(props){
     function onCheckboxChange(e) {
@@ -25,7 +26,7 @@ export default function AnswerCreator(props){
         case "sound":
             answer =    <Card className="answer-item" bordered={true}>
                                 <Checkbox onChange={onCheckboxChange}></Checkbox>
-                                <FileDragger /> 
+                                <AudioSelector onAudioReady={(audioSrc) => props.onChange(audioSrc)}/>
                             </Card>;
             break
     }   

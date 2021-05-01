@@ -2,6 +2,7 @@ import React, { useState } from  "react";
 import FileDragger from "./FileDragger";
 import {Input} from "antd"
 import ImageSelector from "./ImageSelector";
+import AudioSelector from "./AudioSelector";
 
 export default function StimulusCreator(props) {
     let stimulus;
@@ -13,7 +14,7 @@ export default function StimulusCreator(props) {
             stimulus =    <ImageSelector onImageReady={(imgSrc) => props.onStimulusChange(imgSrc)} value={props.value}/> ;
             break
         case "sound":
-            stimulus =    <FileDragger uploadText="Clique para fazer o upload de um estímulo auditivo"/>;
+            stimulus =    <AudioSelector onAudioReady={(audioSrc) => props.onStimulusChange(audioSrc)}/>
             break
     }
     return (

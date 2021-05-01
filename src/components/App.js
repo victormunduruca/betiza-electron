@@ -25,8 +25,8 @@ export default function App() {
        id="avatar" name="avatar"
        accept="image/png, image/jpeg" onChange={(e) => console.log(e.target.value)}></input> */}
             {/* <Header />  */}
-            {/* <QuizCreator questions={questions}/> */}
-            <AudioSelector />
+            <QuizCreator questions={questions}/>
+
 
             {/* <Content style={{ padding: '0 300px' }}>
                 <QuizElement type="text" content="teste"/> 

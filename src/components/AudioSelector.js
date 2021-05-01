@@ -8,7 +8,6 @@ const path = window.require('path');
 
 export default function AudioSelector(props) {
     const [filePath, setFilePath] = useState(""); 
-   // const [img64, setImg64] = useState("");
 
     function openDialog() {
         dialog.showOpenDialog({
@@ -23,16 +22,15 @@ export default function AudioSelector(props) {
     }
     useEffect(() => {
         if(filePath !== "") {
-            //setImg64(fs.readFileSync(filePath[0]).toString('base64'));
             console.log("file path ready");
             let audio = new Audio("data:audio/mp3;base64," + fs.readFileSync(filePath[0]).toString('base64'));
             audio.play();
-            //props.onImageReady("data:image/png;base64," + fs.readFileSync(filePath[0]).toString('base64')); //Calls back functon when ready, with image src as content
+            props.onAudioReady("data:audio/mp3;base64," + fs.readFileSync(filePath[0]).toString('base64'));
         }
     }, [filePath]);
     return (
         <>
-            <Button onClick={openDialog}> Clique para selecionar audio</Button>
+            <Button onClick={openDialog}> Clique para selecionar um áudio</Button>
             {filePath !== "" ? path.basename(filePath[0]) : ""}
         </>
     );
