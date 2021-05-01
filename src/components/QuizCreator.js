@@ -24,8 +24,9 @@ export default function QuizCreator(props) {
     const [stimulusContent, setStimulusContent] = useState(""); // Keeps track of stimulus input
     const [stimulusType, setStimulusType] = useState("text"); // Keeps track of stimulus radio button
     const [answerType, setAnswerType] = useState("text"); // Keeps track of stimulus radio button
+    const [selectedQuestionKey, setSelectedQuestionKey] = useState(0); //Keeps track of the correct answer key
 
-    const [selectedQuestionKey, setSelectedQuestionKey] = useState(0);
+    const [correctStates, setCorrectStates] = useState([false, false, false, false]); //Keeps an array with the value of checkboxes (correct answers or not)
 
     function addQuestion() {
         //create new question component
@@ -37,13 +38,15 @@ export default function QuizCreator(props) {
     //onChangeSelectedQuestion -> update view from the array or file
     function onSelectedQuestionChange(e) {
         let selectedQuestionKey = e.key;
-        //Set Stimulus and Answer radios
-        //If Stimulus type is the same as 
         setSelectedQuestionKey(selectedQuestionKey);
         setStimulusType(getQuestion(selectedQuestionKey).stimulusType); 
         setStimulusContent(getQuestion(selectedQuestionKey).stimulus);
         setAnswersContent(getQuestion(selectedQuestionKey).answers.map(answer => answer.value)); //Puts an array of selected question's answers to answers content array
         setAnswerType(getQuestion(selectedQuestionKey).answerType);
+        
+        let newCorrectedStates = [false, false, false, false]; 
+        newCorrectedStates[getQuestion(selectedQuestionKey).correctAnswerKey] = true;
+        setCorrectStates(newCorrectedStates)
     }
 
     useEffect(() => {
@@ -80,6 +83,14 @@ export default function QuizCreator(props) {
         setAnswerType(answerType);
     }
 
+    function onCorrectAnswerChange(checked, answerKey) {
+        let newCorrectedStates = [false, false, false, false]; //Only one answer can be right, so an empty array is initialized
+        if(checked)
+            newCorrectedStates[answerKey] = true; //If the answer was checked corrected
+        setCorrectStates(newCorrectedStates);
+        getQuestion(selectedQuestionKey).correctAnswerKey = answerKey; //Updates the questions array
+    }
+
     function getQuestion(key) {
         return questions.find((question) => {
             return question.key == key;
@@ -105,8 +116,20 @@ export default function QuizCreator(props) {
             <Layout>
                 <SideBar questions={questions} onAddQuestion={addQuestion} onSelectedQuestionChange={onSelectedQuestionChange}/>
                 <Content>
-                    <StimulusCreationArea onStimulusChange={onStimulusChange} value={stimulusContent} stimulusType={stimulusType} onStimulusTypeChange={onStimulusTypeChange}/>
-                    <AnswerCreationArea onAnswerChange={onAnswerChange} value={answersContent} answerType={answerType} onAnswerTypeChange={onAnswerTypeChange}/>
+                    <StimulusCreationArea 
+                        onStimulusChange={onStimulusChange} 
+                        value={stimulusContent} 
+                        stimulusType={stimulusType} 
+                        onStimulusTypeChange={onStimulusTypeChange}
+                        />
+                    <AnswerCreationArea 
+                        onAnswerChange={onAnswerChange} 
+                        value={answersContent} 
+                        answerType={answerType} 
+                        onAnswerTypeChange={onAnswerTypeChange}
+                        onCorrectAnswerChange={onCorrectAnswerChange}
+                        correctStates={correctStates}
+                    />
                 </Content>
             </Layout>
         </Layout>
