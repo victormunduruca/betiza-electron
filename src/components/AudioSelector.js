@@ -4,6 +4,7 @@ import { Button } from "antd";
 
 const fs = window.require('fs');
 const { dialog } = window.require("electron").remote;
+const path = window.require('path');
 
 export default function AudioSelector(props) {
     const [filePath, setFilePath] = useState(""); 
@@ -13,7 +14,7 @@ export default function AudioSelector(props) {
         dialog.showOpenDialog({
             properties: ['openFile', 'openDirectory']
         }).then(result => {
-            console.log(result.canceled)
+            console.log(result)
             console.log(result.filePaths)
             setFilePath(result.filePaths)
         }).catch(err => {
@@ -32,6 +33,7 @@ export default function AudioSelector(props) {
     return (
         <>
             <Button onClick={openDialog}> Clique para selecionar audio</Button>
+            {filePath !== "" ? path.basename(filePath[0]) : ""}
         </>
     );
 }
