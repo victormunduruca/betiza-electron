@@ -31,17 +31,19 @@ export default function QuizCreator(props) {
         //create new question component
         index+=1;
         setQuestions(prevQuestions => {
-            return [...prevQuestions, {key: index, stimulus: {}, answers: []}]; //Add new empty question to questions
+            return [...prevQuestions, {key: index, stimulus: "", stimulusType: "text", answers: [], answersType: "text"}]; //Add new empty question to questions
         })
     }
-    //onChangeSelectedQuestion -> update view from the array
+    //onChangeSelectedQuestion -> update view from the array or file
     function onSelectedQuestionChange(e) {
         let selectedQuestionKey = e.key;
         //Set Stimulus and Answer radios
         //If Stimulus type is the same as 
         setSelectedQuestionKey(selectedQuestionKey);
-        setStimulusContent(getQuestion(selectedQuestionKey).stimulus.value);
+        setStimulusType(getQuestion(selectedQuestionKey).stimulusType); 
+        setStimulusContent(getQuestion(selectedQuestionKey).stimulus);
         setAnswersContent(getQuestion(selectedQuestionKey).answers.map(answer => answer.value)); //Puts an array of selected question's answers to answers content array
+        setAnswerType(getQuestion(selectedQuestionKey).answerType);
     }
 
     useEffect(() => {
@@ -55,15 +57,17 @@ export default function QuizCreator(props) {
     }, [questions, answersContent, stimulusContent])
 
     function onAnswerChange(answerValue, answerKey, answerType) {
-        getQuestion(selectedQuestionKey).answers[answerKey] = {key: answerKey, type: answerType, value: answerValue}; //Changes value of one of 4 fixed ansewers
+        getQuestion(selectedQuestionKey).answers[answerKey] = {key: answerKey, value: answerValue}; //Changes value of one of 4 fixed ansewers
 
-        let answersContentCopy = [...answersContent]; //Makes a copy of answer copy array and updates the value of state at that index
+        let answersContentCopy = [...answersContent]; //Makes a copy of answer array and updates the value of state at that index
         answersContentCopy[answerKey] = answerValue; 
         setAnswersContent(answersContentCopy); 
+        setAnswerType(answerType); 
     }   
 
     function onStimulusChange(stimulusValue, stimulusType) {
-        getQuestion(selectedQuestionKey).stimulus = {type: stimulusType, value: stimulusValue};  //Add stimulus to question array
+        getQuestion(selectedQuestionKey).stimulus = stimulusValue;  //Add stimulus to question array
+        getQuestion(selectedQuestionKey).stimulusType = stimulusType; //Sets selected question's type as the current stimulusType
         setStimulusContent(stimulusValue);
         console.log(stimulusValue);
     }
