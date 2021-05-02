@@ -15,7 +15,7 @@ export default function App() {
     let rawdata, questions;
 
     try {
-        rawdata = fs.readFileSync('questions.json');
+        rawdata = fs.readFileSync('questionsAudio.json');
         questions = JSON.parse(rawdata);
     } catch {
         console.log("file not found");

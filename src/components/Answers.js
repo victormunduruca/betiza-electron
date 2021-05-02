@@ -36,18 +36,18 @@ function Answers(props) {
         <div>
             <Row gutter={[16, 16]}>
                 <Col className="gutter-row" span={12}>
-                    <QuizElement key = {props.question.answers[0].key} type = {props.question.answerType} value = {props.question.answers[0].value} focusedItem = {focusItem}/>
+                    <QuizElement id = {0} type = {props.question.answerType} value = {props.question.answers[0].value} focusedItem = {focusItem}/>
                 </Col>
                 <Col className="gutter-row" span={12}>
-                    <QuizElement key = {props.question.answers[1].key} type = {props.question.answerType} value = {props.question.answers[1].value} focusedItem = {focusItem}/>
+                    <QuizElement id = {1} type = {props.question.answerType} value = {props.question.answers[1].value} focusedItem = {focusItem}/>
                 </Col>
             </Row>
             <Row gutter={[16, 16]}>
                 <Col className="gutter-row" span={12}>
-                    <QuizElement key = {props.question.answers[2].key} type = {props.question.answerType} value = {props.question.answers[2].value} focusedItem = {focusItem}/>
+                    <QuizElement id = {2} type = {props.question.answerType} value = {props.question.answers[2].value} focusedItem = {focusItem}/>
                 </Col>
                 <Col className="gutter-row" span={12}>
-                    <QuizElement key = {props.question.answers[3].key} type = {props.question.answerType} value = {props.question.answers[3].value} focusedItem = {focusItem}/>
+                    <QuizElement id = {3} type = {props.question.answerType} value = {props.question.answers[3].value} focusedItem = {focusItem}/>
                 </Col>
             </Row>
         </div>
