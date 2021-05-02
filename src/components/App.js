@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from "react";
+import uuid from 'react-uuid';
 import { Layout, Button} from 'antd';
+
 import QuizCreator from "./QuizCreator";
 import AudioSelector from "./AudioSelector";
+import Answers from "./Answers"
 
 
-
+const {Content } = Layout;
 const fs = window.require('fs');
 const { dialog } = window.require("electron").remote;
 
@@ -16,7 +19,7 @@ export default function App() {
         questions = JSON.parse(rawdata);
     } catch {
         console.log("file not found");
-        questions = [{key: 0, stimulus: "", stimulusType: "text", answers: [], answerType: "text"}];
+        questions = [{key: uuid(), stimulus: "", stimulusType: "text", answers: [], answerType: "text"}];
     }
     return (
         <Layout>
@@ -29,7 +32,6 @@ export default function App() {
 
 
             {/* <Content style={{ padding: '0 300px' }}>
-                <QuizElement type="text" content="teste"/> 
                 <Answers /> 
             </Content> */}
         </Layout>

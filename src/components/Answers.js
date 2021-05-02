@@ -1,14 +1,13 @@
 import React, { useState, useEffect }from "react";
 import { Card, Row, Col, Switch } from 'antd';
 import QuizElement from "./QuizElement";
-import CheckBox from "./CheckBox";
-//import GatoSound from './gato.mp3';
-//import useSound from 'use-sound';
+
 import answers from './TestAnswers'
+import AudioSelector from "./AudioSelector";
 
 function Answers() {
     const [focusItem, setfocusItem] = useState(0);
-
+    const [audioSrc, setAudioSrc] = useState("");
     function changeFocus() {
         setfocusItem(focusItem == 3 ? 0 : focusItem + 1);
     }
@@ -19,9 +18,14 @@ function Answers() {
         const interval = setInterval(() => {
            // console.log("teste " + focusItem);
             changeFocus();
-            if(checkedState) {
-                // play();
+            if(audioSrc !== "") {
+                let audio = new Audio(audioSrc);
+                audio.play();
             }
+            // if(checkedState) {
+            //     // play();
+            // }
+
         }, 1000);
         return () => clearInterval(interval);
       }, [focusItem, setfocusItem]);
@@ -33,10 +37,15 @@ function Answers() {
         setCheckedState(!checkedState);
     }
 
+
+    function onAudioReady(src) {
+        setAudioSrc(src);
+    }
+
     return (
         <div>
-            <Switch onChange={onChange} />
-            <h2>{checkedState}</h2> 
+            {/* <Switch onChange={onChange} /> */}
+            <AudioSelector onAudioReady={onAudioReady}/>
             <Row gutter={[16, 16]}>
                 <Col className="gutter-row" span={12}>
                     <QuizElement answerId = {answers[0].id} type = {answers[0].type} content = {answers[0].content} focusedItem = {focusItem}/>

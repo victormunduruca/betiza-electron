@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import uuid from "react-uuid";
+
 import { Radio, Layout, Menu, Typography, Button, PageHeader, Row, Col } from "antd";
 
 import TypeSelector from "./TypeSelector";
@@ -14,7 +16,6 @@ const { Title } = Typography;
 
 
 
-let index = 0; //TODO Delete
 const fs = window.require('fs');
 
 
@@ -30,9 +31,9 @@ export default function QuizCreator(props) {
 
     function addQuestion() {
         //create new question component
-        index+=1;
+        let newQuestionKey = uuid();
         setQuestions(prevQuestions => {
-            return [...prevQuestions, {key: index, stimulus: "", stimulusType: "text", answers: [], answerType: "text"}]; //Add new empty question to questions
+            return [...prevQuestions, {key: newQuestionKey, stimulus: "", stimulusType: "text", answers: [], answerType: "text"}]; //Add new empty question to questions
         })
     }
     //onChangeSelectedQuestion -> update view from the array or file
@@ -51,7 +52,7 @@ export default function QuizCreator(props) {
 
     useEffect(() => {
         console.log(props.questions);
-        onSelectedQuestionChange({key: 0}); //Loads questions from file if applicable TODO trocar
+        onSelectedQuestionChange(props.questions[0]); //Loads questions from file if applicable TODO trocar
     }, []);
 
     const [questionsString, setQuestionString] = useState("");
@@ -114,7 +115,7 @@ export default function QuizCreator(props) {
                 ]}
             />
             <Layout>
-                <SideBar questions={questions} onAddQuestion={addQuestion} onSelectedQuestionChange={onSelectedQuestionChange}/>
+                <SideBar questions={questions} onAddQuestion={addQuestion} onSelectedQuestionChange={onSelectedQuestionChange} selectedQuestionKey={selectedQuestionKey}/>
                 <Content>
                     <StimulusCreationArea 
                         onStimulusChange={onStimulusChange} 
