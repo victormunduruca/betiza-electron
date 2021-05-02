@@ -2,6 +2,14 @@ import React, {useState, useEffect} from "react";
 import uuid from 'react-uuid';
 import { Layout, Button} from 'antd';
 
+
+import {
+    HashRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
+
 import QuizCreator from "./QuizCreator";
 import AudioSelector from "./AudioSelector";
 import QuizPlayer from "./QuizPlayer"
@@ -28,12 +36,23 @@ export default function App() {
        id="avatar" name="avatar"
        accept="image/png, image/jpeg" onChange={(e) => console.log(e.target.value)}></input> */}
             {/* <Header />  */}
-            <QuizCreator questions={questions}/>
+            {/* <QuizCreator questions={questions}/> */}
 
-
-            {/* <Content style={{ padding: '0 300px' }}>
-                <QuizPlayer question={questions[0]} /> 
-            </Content> */}
+            {/* <Router>
+                <Link to = "/create"> Criar uma atividade </Link>
+                <Link to = "/view"> Visualiar uma atividade </Link>
+                <Switch>
+                    <Route path="/create">
+                        <QuizCreator questions={questions}/>
+                    </Route>
+                    <Route path="/view">
+                        <QuizPlayer questions={questions[0]}/>
+                    </Route>
+                </Switch>
+            </Router> */}
+            <Content style={{ padding: '0 300px' }}>
+                <QuizPlayer questions={questions} /> 
+            </Content>
         </Layout>
     );
 }

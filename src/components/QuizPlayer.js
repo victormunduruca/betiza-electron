@@ -4,7 +4,11 @@ import QuizElement from "./QuizElement";
 
 function QuizPlayer(props) {
     let startSweepId;
-    props.question.stimulusType == "sound" ? startSweepId = 0 : startSweepId = 1;
+    let currentQuestionIndex = 0; //TODO Delete
+
+    const [currentQuestion, setCurrentQuestion] = useState(props.questions[0]); //sets the first question as current one
+
+    currentQuestion.stimulusType == "sound" ? startSweepId = 0 : startSweepId = 1;
     
     const [focusItem, setfocusItem] = useState(startSweepId);
     useEffect(() => {
@@ -16,28 +20,37 @@ function QuizPlayer(props) {
 
 
     function onElementClicked(answerId) {
-        if(answerId == props.question.correctAnswerKey) {
+        if(answerId == currentQuestion.correctAnswerKey) { // Check if answer was correct 
             console.log("Uhuuuul resposta correta");
+            let currentIndex = props.questions.indexOf(currentQuestion);
+            console.log(currentIndex);
+            if(currentIndex < props.questions.length) {
+                console.log(props.questions.length);
+                setCurrentQuestion(props.questions[currentIndex + 1]);
+            }
+        } else {
+            console.log("Oppsss errou");
         }
+        //Give feedback and go to next question
     }
 
     return (
         <div>
-            <QuizElement sweepId = {0} type = {props.question.stimulusType} clickable = {false} value = {props.question.stimulus} focusedItem = {focusItem} />
+            <QuizElement sweepId = {0} type = {currentQuestion.stimulusType} clickable = {false} value = {currentQuestion.stimulus} focusedItem = {focusItem} />
             <Row gutter={[16, 16]}>
                 <Col className="gutter-row" span={12}>
-                    <QuizElement sweepId = {1} answerId = {0} clickable onElementClicked = {onElementClicked} type = {props.question.answerType} value = {props.question.answers[0].value} focusedItem = {focusItem} />
+                    <QuizElement sweepId = {1} answerId = {0} clickable onElementClicked = {onElementClicked} type = {currentQuestion.answerType} value = {currentQuestion.answers[0].value} focusedItem = {focusItem} />
                 </Col>
                 <Col className="gutter-row" span={12}>
-                    <QuizElement sweepId = {2} answerId = {1} clickable onElementClicked = {onElementClicked} type = {props.question.answerType} value = {props.question.answers[1].value} focusedItem = {focusItem} />
+                    <QuizElement sweepId = {2} answerId = {1} clickable onElementClicked = {onElementClicked} type = {currentQuestion.answerType} value = {currentQuestion.answers[1].value} focusedItem = {focusItem} />
                 </Col>
             </Row>
             <Row gutter={[16, 16]}>
                 <Col className="gutter-row" span={12}>
-                    <QuizElement sweepId = {3} answerId = {2} clickable onElementClicked = {onElementClicked} type = {props.question.answerType} value = {props.question.answers[2].value} focusedItem = {focusItem} />
+                    <QuizElement sweepId = {3} answerId = {2} clickable onElementClicked = {onElementClicked} type = {currentQuestion.answerType} value = {currentQuestion.answers[2].value} focusedItem = {focusItem} />
                 </Col>
                 <Col className="gutter-row" span={12}>
-                    <QuizElement sweepId = {4} answerId = {3} clickable onElementClicked = {onElementClicked} type = {props.question.answerType} value = {props.question.answers[3].value} focusedItem = {focusItem} />
+                    <QuizElement sweepId = {4} answerId = {3} clickable onElementClicked = {onElementClicked} type = {currentQuestion.answerType} value = {currentQuestion.answers[3].value} focusedItem = {focusItem} />
                 </Col>
             </Row>
         </div>
