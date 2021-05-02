@@ -15,7 +15,7 @@ export default function App() {
     let rawdata, questions;
 
     try {
-        rawdata = fs.readFileSync('APAGAquestions3.json');
+        rawdata = fs.readFileSync('questions.json');
         questions = JSON.parse(rawdata);
     } catch {
         console.log("file not found");
@@ -28,12 +28,12 @@ export default function App() {
        id="avatar" name="avatar"
        accept="image/png, image/jpeg" onChange={(e) => console.log(e.target.value)}></input> */}
             {/* <Header />  */}
-            <QuizCreator questions={questions}/>
+            {/* <QuizCreator questions={questions}/> */}
 
 
-            {/* <Content style={{ padding: '0 300px' }}>
-                <Answers /> 
-            </Content> */}
+            <Content style={{ padding: '0 300px' }}>
+                <Answers question={questions[0]} /> 
+            </Content>
         </Layout>
     );
 }

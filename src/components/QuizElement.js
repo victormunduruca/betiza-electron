@@ -17,10 +17,10 @@ export default function QuizElement(props) {
     useEffect(() => {
         window.addEventListener('click', handleClick);
         return () => window.removeEventListener('click', handleClick);
-    }, [props.focusedItem, props.answerId, handleClick]);
+    }, [props.focusedItem, props.key, handleClick]);
 
     function handleClick() {
-        if(props.focusedItem == props.answerId) {
+        if(props.focusedItem == props.key) {
             console.log("Clicou no " +props.focusedItem);
         }
         //play();
@@ -30,7 +30,7 @@ export default function QuizElement(props) {
         if(props.focusedItem == null) { //In case it's not in sweep
             return false;
         }
-        return props.focusedItem == props.answerId;
+        return props.focusedItem == props.key;
     }
 
 
@@ -45,12 +45,12 @@ export default function QuizElement(props) {
     switch(props.type) {
         case "text":
             quizElement =    <Card className="text-answer" bordered={true} style={style}>
-                                <div className="text-answer-type">{props.content}</div>
+                                <div className="text-answer-type">{props.value}</div>
                             </Card>
             break;
         case "image":
             quizElement =    <Card className="answer-item" bordered={true} style={style}>
-                                <img src={props.content} style={{width: "100%"}}></img>
+                                <img src={props.value} style={{width: "100%"}}></img>
                             </Card>;
             break
         case "audio":

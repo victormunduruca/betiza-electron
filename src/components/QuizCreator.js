@@ -102,7 +102,7 @@ export default function QuizCreator(props) {
 
     return (
         <Layout>
-            {/* <Button onClick={fs.writeFileSync('questions.json', questionsString)}>CLica pra salvar</Button> */}
+            <Button onClick={fs.writeFileSync('questions.json', questionsString)}>CLica pra salvar</Button>
             <PageHeader
                 ghost={false}
                 onBack={() => window.history.back()}
