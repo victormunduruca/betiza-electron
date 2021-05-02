@@ -4,7 +4,7 @@ import { Layout, Button} from 'antd';
 
 import QuizCreator from "./QuizCreator";
 import AudioSelector from "./AudioSelector";
-import Answers from "./Answers"
+import QuizPlayer from "./QuizPlayer"
 
 
 const {Content } = Layout;
@@ -15,7 +15,7 @@ export default function App() {
     let rawdata, questions;
 
     try {
-        rawdata = fs.readFileSync('questionsAudio.json');
+        rawdata = fs.readFileSync('questionsText.json');
         questions = JSON.parse(rawdata);
     } catch {
         console.log("file not found");
@@ -28,12 +28,12 @@ export default function App() {
        id="avatar" name="avatar"
        accept="image/png, image/jpeg" onChange={(e) => console.log(e.target.value)}></input> */}
             {/* <Header />  */}
-            {/* <QuizCreator questions={questions}/> */}
+            <QuizCreator questions={questions}/>
 
 
-            <Content style={{ padding: '0 300px' }}>
-                <Answers question={questions[0]} /> 
-            </Content>
+            {/* <Content style={{ padding: '0 300px' }}>
+                <QuizPlayer question={questions[0]} /> 
+            </Content> */}
         </Layout>
     );
 }

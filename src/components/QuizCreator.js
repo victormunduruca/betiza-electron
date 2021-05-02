@@ -58,7 +58,7 @@ export default function QuizCreator(props) {
     const [questionsString, setQuestionString] = useState("");
     useEffect(() => {
         setQuestionString(JSON.stringify(questions));
-    }, [questions, answersContent, stimulusContent])
+    }, [questions, answersContent, stimulusContent, correctStates])
 
     function onAnswerChange(answerValue, answerKey, answerType) {
         getQuestion(selectedQuestionKey).answers[answerKey] = {key: answerKey, value: answerValue}; //Changes value of one of 4 fixed ansewers
@@ -86,10 +86,11 @@ export default function QuizCreator(props) {
 
     function onCorrectAnswerChange(checked, answerKey) {
         let newCorrectedStates = [false, false, false, false]; //Only one answer can be right, so an empty array is initialized
-        if(checked)
+        if(checked) {
             newCorrectedStates[answerKey] = true; //If the answer was checked corrected
+            getQuestion(selectedQuestionKey).correctAnswerKey = answerKey; //Updates the questions array
+        }
         setCorrectStates(newCorrectedStates);
-        getQuestion(selectedQuestionKey).correctAnswerKey = answerKey; //Updates the questions array
     }
 
     function getQuestion(key) {
@@ -102,7 +103,7 @@ export default function QuizCreator(props) {
 
     return (
         <Layout>
-            <Button onClick={fs.writeFileSync('questionsAudio.json', questionsString)}>CLica pra salvar</Button>
+            <Button onClick={fs.writeFileSync('questionsText.json', questionsString)}>CLica pra salvar</Button>
             <PageHeader
                 ghost={false}
                 onBack={() => window.history.back()}

@@ -14,11 +14,11 @@ export default function QuizElement(props) {
     useEffect(() => {
         window.addEventListener('click', handleClick);
         return () => window.removeEventListener('click', handleClick);
-    }, [props.focusedItem, props.id, handleClick]);
+    }, [props.focusedItem, props.sweepId, handleClick]);
 
     function handleClick() {
-        if(props.focusedItem == props.id) {
-            console.log("Clicou no " +props.focusedItem);
+        if(props.focusedItem == props.sweepId && props.clickable == true) {
+            props.onElementClicked(props.answerId);
         }
     }
   
@@ -26,7 +26,7 @@ export default function QuizElement(props) {
         if(props.focusedItem == null) { //In case it's not in sweep
             return false;
         }
-        return props.focusedItem == props.id;
+        return props.focusedItem == props.sweepId;
     }
 
 
@@ -46,7 +46,7 @@ export default function QuizElement(props) {
             break;
         case "image":
             quizElement =    <Card className="answer-item" bordered={true} style={style} focusedItem={props.focusedItem}>
-                                <img src={props.value} style={{width: "100%"}}></img>
+                                <img src={props.value} style={{wsweepIdth: "100%"}}></img>
                                 {props.test}
                             </Card>;
             break
