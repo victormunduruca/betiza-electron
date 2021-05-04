@@ -1,7 +1,7 @@
 import React from "react";
 import {Button} from "antd";
 
-export default function Activity(props) {
+export default function ActivityPreview(props) {
     //receive name and key
     //display name and preview and edit button
     return (
