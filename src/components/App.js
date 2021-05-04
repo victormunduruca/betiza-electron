@@ -13,6 +13,7 @@ import {
 import QuizCreator from "./QuizCreator";
 import AudioSelector from "./AudioSelector";
 import QuizPlayer from "./QuizPlayer"
+import ActivityCreator from "./ActivityCreator";
 
 
 const {Content } = Layout;
@@ -50,9 +51,10 @@ export default function App() {
                     </Route>
                 </Switch>
             </Router> */}
-            <Content style={{ padding: '0 300px' }}>
+            {/* <Content style={{ padding: '0 300px' }}>
                 <QuizPlayer questions={questions} /> 
-            </Content>
+            </Content> */}
+            <ActivityCreator />
         </Layout>
     );
 }
