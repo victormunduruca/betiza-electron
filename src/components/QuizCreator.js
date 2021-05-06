@@ -110,8 +110,6 @@ export default function QuizCreator(props) {
 
     return (
         <Layout>
-            <Button onClick={() => console.log("clicked me and redirected")}><Link to="/"> Voltar para tela inicial </Link></Button>
-            <Button onClick={fs.writeFileSync('questionsText.json', questionsString)}>CLica pra salvar</Button>
             <PageHeader
                 ghost={false}
                 onBack={() => window.history.back()}
@@ -119,8 +117,8 @@ export default function QuizCreator(props) {
                 extra={[
                     <Button key="2">Visualizar</Button>,
                     <Button key="1" type="primary" onClick={() => props.onClickedSave(questionsString, "Nome Atividade")}>
-                        Salvar Atividade
-                            </Button>,
+                       <Link to="/">Salvar Atividade</Link>
+                    </Button>,
                 ]}
             />
             <Layout>

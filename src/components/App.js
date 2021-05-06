@@ -27,19 +27,22 @@ const basePath = app.getAppPath("appData");
 
 export default function App() {
     let activitiesFolder = path.join(basePath, "activities");
-    let loadedActivities = [];
+    const [loadedActivities, setLoadedActivities] = useState(loadActivities());
     const [selectedActivity, setSelectedActivity] = useState(); //Sets selected activity used in edit / view actions
 
     if (!fs.existsSync(activitiesFolder)) fs.mkdirSync(activitiesFolder); //Creates activities path if it doesn't exist in userDatas folder
 
-    //TODO put this inside useEffect
-    fs.readdirSync(activitiesFolder).forEach(file => {
-        let fileName = path.basename(file, '.json');
-        let fields = fileName.split("*");
-        console.log("key: " + fields[0]);
-        console.log("name: " + fields[1]);
-        loadedActivities.push({ key: fields[0], name: fields[1] });
-    });
+    function loadActivities() {
+        let loadedActivitiesTemp = []
+        fs.readdirSync(activitiesFolder).forEach(file => {
+            let fileName = path.basename(file, '.json');
+            let fields = fileName.split("*");
+            console.log("key: " + fields[0]);
+            console.log("name: " + fields[1]);
+            loadedActivitiesTemp.push({ key: fields[0], name: fields[1] });
+        });
+        return loadedActivitiesTemp;
+    }
 
     function readActivity(activityName, activityKey) {
         let activity, rawdata;
@@ -72,10 +75,8 @@ export default function App() {
     function onClickedSave(questionsString, activityName) {
         let newActivityPath = path.join(activitiesFolder, uuid() + "*" + activityName + ".json"); // sets the new activity path
         fs.writeFileSync(newActivityPath, questionsString); // saves the new activity
-        //Receives an activity object 
-        //creates uuid key
-        //saves the file as JSON
-        //What if it already exists?
+            //TODO put this inside useEffect
+        setLoadedActivities(loadActivities());
     }
 
     //TODO Loading page
@@ -84,7 +85,6 @@ export default function App() {
                 <Link to="/">Home</Link>
                 <Link to="/whisky">whisky</Link>
                 <Link to="/agua">agua</Link>
-                <Button onClick={() => setSelectedActivity("sheila")}>Set Sheila</Button>
 
                 <Switch>
                     <Route exact path="/">
@@ -94,7 +94,7 @@ export default function App() {
                         <QuizCreator onClickedSave={onClickedSave}/> 
                     </Route>
                     <Route path="/view">
-                        {selectedActivity ? <QuizPlayer questions={selectedActivity} onClickedSave={onClickedSave}/> : null} 
+                        {selectedActivity ? <QuizPlayer questions={selectedActivity}/> : null} 
                     </Route>
                     <Route path="/edit">
                         {selectedActivity ? <QuizCreator questions={selectedActivity} onClickedSave={onClickedSave}/> : null} 
