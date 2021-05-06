@@ -23,9 +23,14 @@ const fs = window.require('fs');
 
 
 export default function QuizCreator(props) {
-    var startingQuestions;
+    var startingQuestions, startingActivityName = "";
     //If in edit or view, there will be a activity prop, else, create blank starting array
-    props.activity ?  startingQuestions = props.activity.questions : startingQuestions = [{ key: uuid(), stimulus: "", stimulusType: "text", answers: [], answerType: "text" }]
+    if (!props.create){
+        startingQuestions = props.activity.questions;
+        startingActivityName = props.activity.name;
+    } else {
+        startingQuestions = [{ key: uuid(), stimulus: "", stimulusType: "text", answers: [], answerType: "text" }];
+    }
 
     const [questions, setQuestions] = useState(startingQuestions);     //Array of questions objects
     const [answersContent, setAnswersContent] = useState([]); // Keeps track of answers input 
@@ -35,7 +40,7 @@ export default function QuizCreator(props) {
     const [selectedQuestionKey, setSelectedQuestionKey] = useState(0); //Keeps track of the correct answer key
 
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [activityName, setActivityName] = useState("");
+    const [activityName, setActivityName] = useState(startingActivityName);
 
     const [correctStates, setCorrectStates] = useState([false, false, false, false]); //Keeps an array with the value of checkboxes (correct answers or not)
 
@@ -60,11 +65,11 @@ export default function QuizCreator(props) {
         setCorrectStates(newCorrectedStates)
     }
 
-
+    //Things to run in the start of the program
     useEffect(() => {
         if(props.create) setIsModalVisible(true); //Show activity name modal in create mode
         onSelectedQuestionChange(startingQuestions[0]); //Loads questions from file if applicable TODO trocar
-    }, []);
+    }, []); 
 
     const [questionsString, setQuestionString] = useState("");
     useEffect(() => {
@@ -129,7 +134,7 @@ export default function QuizCreator(props) {
                             type="primary" 
                             onClick={() => {
                                 //if it is in create mode, send new name created with modal. If in view or edit, send read activities properties
-                                props.create ? props.onClickedSave(questionsString, activityName) : props.onClickedSave(questionsString, props.activity.name, props.activity.key);
+                                props.create ? props.onClickedSave(questionsString, activityName) : props.onClickedSave(questionsString, activityName, props.activity.key);
                             }}>
                        <Link to="/">Salvar Atividade</Link>
                     </Button>,
@@ -155,6 +160,7 @@ export default function QuizCreator(props) {
                 </Content>
             </Layout>
             <Modal 
+                title="Nome da atividade"
                 visible={isModalVisible}
                 onOk={() => setIsModalVisible(false)}
                 onCancel={() => setIsModalVisible(false)}
