@@ -69,6 +69,16 @@ export default function App() {
         //got to QuizCreator, on react router
     }
 
+    function onClickedSave(questionsString, activityName) {
+        let newActivityPath = path.join(activitiesFolder, uuid() + "*" + activityName + ".json"); // sets the new activity path
+        fs.writeFileSync(newActivityPath, questionsString); // saves the new activity
+        //Receives an activity object 
+        //creates uuid key
+        //saves the file as JSON
+        //What if it already exists?
+    }
+
+    //TODO Loading page
     return (
             <Router>
                 <Link to="/">Home</Link>
@@ -81,13 +91,13 @@ export default function App() {
                         <ActivityCreator loadedActivities={loadedActivities} onClickedView={onClickedView} onClickedEdit={onClickedEdit}/>
                     </Route>
                     <Route path="/create">
-                        <QuizCreator/> 
+                        <QuizCreator onClickedSave={onClickedSave}/> 
                     </Route>
                     <Route path="/view">
-                        {selectedActivity ? <QuizPlayer questions={selectedActivity}/> : null} //TODO Loading page
+                        {selectedActivity ? <QuizPlayer questions={selectedActivity} onClickedSave={onClickedSave}/> : null} 
                     </Route>
                     <Route path="/edit">
-                        {selectedActivity ? <QuizCreator questions={selectedActivity}/> : null} //TODO Loading page
+                        {selectedActivity ? <QuizCreator questions={selectedActivity} onClickedSave={onClickedSave}/> : null} 
                     </Route>
                 </Switch>
             </Router>

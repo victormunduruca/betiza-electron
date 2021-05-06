@@ -118,7 +118,7 @@ export default function QuizCreator(props) {
                 title="Nome Atividade"
                 extra={[
                     <Button key="2">Visualizar</Button>,
-                    <Button key="1" type="primary">
+                    <Button key="1" type="primary" onClick={() => props.onClickedSave(questionsString, "Nome Atividade")}>
                         Salvar Atividade
                             </Button>,
                 ]}

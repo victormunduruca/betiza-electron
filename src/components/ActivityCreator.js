@@ -16,14 +16,6 @@ const fs = window.require('fs');
 
 
 export default function ActivityCreator(props) {
-    //on load (useeffect)
-    //state of activities from the file read
-    // const [activities, setActivities] = useState();
-
-
-
-
-
 
     return (
         <Layout>
