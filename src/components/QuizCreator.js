@@ -10,6 +10,11 @@ import AnswerCreationArea from "./AnswerCreationArea";
 import SideBar from "./SideBar";
 import StimulusCreationArea from "./StimulusCreationArea";
 
+import {
+    Link
+} from "react-router-dom";
+
+
 const { Content } = Layout;
 const { Title } = Typography;
 
@@ -20,7 +25,9 @@ const fs = window.require('fs');
 
 
 export default function QuizCreator(props) {
-    const [questions, setQuestions] = useState(props.questions);     //Array of questions objects
+    var startingQuestions = props.questions;
+    if (startingQuestions == undefined) startingQuestions = [{ key: uuid(), stimulus: "", stimulusType: "text", answers: [], answerType: "text" }]
+    const [questions, setQuestions] = useState(startingQuestions);     //Array of questions objects
     const [answersContent, setAnswersContent] = useState([]); // Keeps track of answers input 
     const [stimulusContent, setStimulusContent] = useState(""); // Keeps track of stimulus input
     const [stimulusType, setStimulusType] = useState("text"); // Keeps track of stimulus radio button
@@ -51,8 +58,8 @@ export default function QuizCreator(props) {
     }
 
     useEffect(() => {
-        console.log(props.questions);
-        onSelectedQuestionChange(props.questions[0]); //Loads questions from file if applicable TODO trocar
+        //console.log(props.questions);
+        onSelectedQuestionChange(startingQuestions[0]); //Loads questions from file if applicable TODO trocar
     }, []);
 
     const [questionsString, setQuestionString] = useState("");
@@ -103,6 +110,7 @@ export default function QuizCreator(props) {
 
     return (
         <Layout>
+            <Button onClick={() => console.log("clicked me and redirected")}><Link to="/"> Voltar para tela inicial </Link></Button>
             <Button onClick={fs.writeFileSync('questionsText.json', questionsString)}>CLica pra salvar</Button>
             <PageHeader
                 ghost={false}

@@ -57,17 +57,17 @@ export default function App() {
 
     return (
             <Router>
-                {/* <Link to="/">Home</Link>
+                <Link to="/">Home</Link>
                 <Link to="/whisky">whisky</Link>
-                <Link to="/agua">agua</Link> */}
+                <Link to="/agua">agua</Link>
 
 
                 <Switch>
                     <Route exact path="/">
-                        <Inicio />
+                        <ActivityCreator loadedActivities={loadedActivities}/>
                     </Route>
-                    <Route path="/whisky">
-                        <Whisky /> 
+                    <Route path="/create">
+                        <QuizCreator /> 
                     </Route>
                     <Route path="/agua">
                         <Agua />
@@ -100,7 +100,7 @@ function Agua(props) {
     return (
         <div>
         Agua de coco
-            <Link to="/whisky"> {props.text} </Link>
+            <Link to="/"> Voltar para tela inicial </Link>
         </div>
     );
 }

@@ -38,7 +38,7 @@ export default function ActivityCreator(props) {
 
     return (
         <Layout>
-            {/* <PageHeader
+            <PageHeader
                 ghost={false}
                 title="Betiza"
             />
@@ -46,9 +46,7 @@ export default function ActivityCreator(props) {
             <Content>
                 <Link to="/create">Criar Nova Atividade</Link>
                 {props.loadedActivities.map((activity) => <Activity name={activity.name} key={activity.key} id={activity.key} onClickedView={onClickedView} onClickedEdit={onClickedEdit}/>)}
-            </Content> */}
-            Este é o activity creator
-            <Link to="/">Clica aqui para voltar para o app</Link>
+            </Content>
         </Layout>
     );
 }
