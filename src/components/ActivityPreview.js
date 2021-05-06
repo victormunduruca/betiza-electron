@@ -7,8 +7,8 @@ export default function ActivityPreview(props) {
     return (
         <div>
             {props.name}
-            <Button>Editar</Button>
-            <Button>Visualizar</Button>
+            <Button onClick={() => props.onClickedEdit(props.name, props.id)}>Editar</Button>
+            <Button onClick={() => props.onClickedView(props.name, props.id)}>Visualizar</Button>
         </div>
     );
 }
