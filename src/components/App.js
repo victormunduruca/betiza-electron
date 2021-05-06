@@ -64,7 +64,8 @@ export default function App() {
     }
 
     function onClickedEdit(activityName, activityKey) {
-        //read questions
+        let activity = readActivity(activityName, activityKey);
+        setSelectedActivity(activity);
         //got to QuizCreator, on react router
     }
 
@@ -83,7 +84,10 @@ export default function App() {
                         <QuizCreator/> 
                     </Route>
                     <Route path="/view">
-                        {selectedActivity ? <QuizPlayer questions={selectedActivity}/> : null}
+                        {selectedActivity ? <QuizPlayer questions={selectedActivity}/> : null} //TODO Loading page
+                    </Route>
+                    <Route path="/edit">
+                        {selectedActivity ? <QuizCreator questions={selectedActivity}/> : null} //TODO Loading page
                     </Route>
                 </Switch>
             </Router>
