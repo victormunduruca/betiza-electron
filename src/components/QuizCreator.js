@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import uuid from "react-uuid";
 
-import { Radio, Layout, Menu, Typography, Button, PageHeader, Row, Col } from "antd";
+import { Modal, Input, Layout, Typography, Button, PageHeader} from "antd";
 
-import TypeSelector from "./TypeSelector";
-import TextStimulusCreator from "./StimulusCreator";
 
 import AnswerCreationArea from "./AnswerCreationArea";
 import SideBar from "./SideBar";
@@ -36,6 +34,9 @@ export default function QuizCreator(props) {
     const [answerType, setAnswerType] = useState("text"); // Keeps track of stimulus radio button
     const [selectedQuestionKey, setSelectedQuestionKey] = useState(0); //Keeps track of the correct answer key
 
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [activityName, setActivityName] = useState("");
+
     const [correctStates, setCorrectStates] = useState([false, false, false, false]); //Keeps an array with the value of checkboxes (correct answers or not)
 
     function addQuestion() {
@@ -59,8 +60,9 @@ export default function QuizCreator(props) {
         setCorrectStates(newCorrectedStates)
     }
 
+
     useEffect(() => {
-        
+        if(props.create) setIsModalVisible(true); //Show activity name modal in create mode
         onSelectedQuestionChange(startingQuestions[0]); //Loads questions from file if applicable TODO trocar
     }, []);
 
@@ -68,6 +70,11 @@ export default function QuizCreator(props) {
     useEffect(() => {
         setQuestionString(JSON.stringify(questions));
     }, [questions, answersContent, stimulusContent, correctStates])
+
+    function onActivityNameChange(e) {
+        let activityNewName = e.target.value;
+        setActivityName(activityNewName);
+    }
 
     function onAnswerChange(answerValue, answerKey, answerType) {
         getQuestion(selectedQuestionKey).answers[answerKey] = {key: answerKey, value: answerValue}; //Changes value of one of 4 fixed ansewers
@@ -109,13 +116,13 @@ export default function QuizCreator(props) {
     }
 
 
-    let activityName = "Atividade Teste"; //TODO Delete
+
     return (
         <Layout>
             <PageHeader
                 ghost={false}
                 onBack={() => window.history.back()}
-                title="Nome Atividade"
+                title={activityName}
                 extra={[
                     <Button key="2">Visualizar</Button>,
                     <Button key="1" 
@@ -147,6 +154,13 @@ export default function QuizCreator(props) {
                     />
                 </Content>
             </Layout>
+            <Modal 
+                visible={isModalVisible}
+                onOk={() => setIsModalVisible(false)}
+                onCancel={() => setIsModalVisible(false)}
+            >
+                <Input value={activityName} onChange={onActivityNameChange}></Input>
+            </Modal>
         </Layout>
     );
 }
