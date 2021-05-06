@@ -6,7 +6,7 @@ function QuizPlayer(props) {
     let startSweepId;
     let currentQuestionIndex = 0; //TODO Delete
 
-    const [currentQuestion, setCurrentQuestion] = useState(props.questions[0]); //sets the first question as current one
+    const [currentQuestion, setCurrentQuestion] = useState(props.activity.questions[0]); //sets the first question as current one
 
     currentQuestion.stimulusType == "sound" ? startSweepId = 0 : startSweepId = 1;
     

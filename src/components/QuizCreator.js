@@ -25,8 +25,10 @@ const fs = window.require('fs');
 
 
 export default function QuizCreator(props) {
-    var startingQuestions = props.questions;
-    if (startingQuestions == undefined) startingQuestions = [{ key: uuid(), stimulus: "", stimulusType: "text", answers: [], answerType: "text" }]
+    var startingQuestions;
+    //If in edit or view, there will be a activity prop, else, create blank starting array
+    props.activity ?  startingQuestions = props.activity.questions : startingQuestions = [{ key: uuid(), stimulus: "", stimulusType: "text", answers: [], answerType: "text" }]
+
     const [questions, setQuestions] = useState(startingQuestions);     //Array of questions objects
     const [answersContent, setAnswersContent] = useState([]); // Keeps track of answers input 
     const [stimulusContent, setStimulusContent] = useState(""); // Keeps track of stimulus input
@@ -58,7 +60,7 @@ export default function QuizCreator(props) {
     }
 
     useEffect(() => {
-        //console.log(props.questions);
+        
         onSelectedQuestionChange(startingQuestions[0]); //Loads questions from file if applicable TODO trocar
     }, []);
 
@@ -107,7 +109,7 @@ export default function QuizCreator(props) {
     }
 
 
-
+    let activityName = "Atividade Teste"; //TODO Delete
     return (
         <Layout>
             <PageHeader
@@ -116,7 +118,12 @@ export default function QuizCreator(props) {
                 title="Nome Atividade"
                 extra={[
                     <Button key="2">Visualizar</Button>,
-                    <Button key="1" type="primary" onClick={() => props.onClickedSave(questionsString, "Nome Atividade")}>
+                    <Button key="1" 
+                            type="primary" 
+                            onClick={() => {
+                                //if it is in create mode, send new name created with modal. If in view or edit, send read activities properties
+                                props.create ? props.onClickedSave(questionsString, activityName) : props.onClickedSave(questionsString, props.activity.name, props.activity.key);
+                            }}>
                        <Link to="/">Salvar Atividade</Link>
                     </Button>,
                 ]}

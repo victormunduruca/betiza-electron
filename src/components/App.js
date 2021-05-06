@@ -60,22 +60,20 @@ export default function App() {
     function onClickedView(activityName, activityKey) {
        // setSelectedActivity("robson");
         let activity = readActivity(activityName, activityKey);
-        setSelectedActivity(activity);
-        // console.log(activity);
-        //read questions
-        //go to QuizViewer, on router 
+        setSelectedActivity({questions: activity, name: activityName, key: activityKey});
     }
 
     function onClickedEdit(activityName, activityKey) {
         let activity = readActivity(activityName, activityKey);
-        setSelectedActivity(activity);
+        setSelectedActivity({questions: activity, name: activityName, key: activityKey});
         //got to QuizCreator, on react router
     }
 
-    function onClickedSave(questionsString, activityName) {
-        let newActivityPath = path.join(activitiesFolder, uuid() + "*" + activityName + ".json"); // sets the new activity path
+    function onClickedSave(questionsString, activityName, activityKey) {
+        let key;
+        activityKey ? key = activityKey : uuid(); //if theres a key (view or edit), use it, otherwise create uuid
+        let newActivityPath = path.join(activitiesFolder, key + "*" + activityName + ".json"); // sets the new activity path
         fs.writeFileSync(newActivityPath, questionsString); // saves the new activity
-            //TODO put this inside useEffect
         setLoadedActivities(loadActivities());
     }
 
@@ -83,21 +81,19 @@ export default function App() {
     return (
             <Router>
                 <Link to="/">Home</Link>
-                <Link to="/whisky">whisky</Link>
-                <Link to="/agua">agua</Link>
 
                 <Switch>
                     <Route exact path="/">
                         <ActivityCreator loadedActivities={loadedActivities} onClickedView={onClickedView} onClickedEdit={onClickedEdit}/>
                     </Route>
                     <Route path="/create">
-                        <QuizCreator onClickedSave={onClickedSave}/> 
+                        <QuizCreator onClickedSave={onClickedSave} create/> 
                     </Route>
                     <Route path="/view">
-                        {selectedActivity ? <QuizPlayer questions={selectedActivity}/> : null} 
+                        {selectedActivity ? <QuizPlayer activity={selectedActivity}/> : null} 
                     </Route>
                     <Route path="/edit">
-                        {selectedActivity ? <QuizCreator questions={selectedActivity} onClickedSave={onClickedSave}/> : null} 
+                        {selectedActivity ? <QuizCreator activity={selectedActivity} onClickedSave={onClickedSave}/> : null} 
                     </Route>
                 </Switch>
             </Router>
@@ -105,31 +101,6 @@ export default function App() {
 }
 
 
-function Inicio() {
-    return (
-        <div>
-            Esse era pra ser o primerio
-            <Button><Link to="/whisky"> Va para agua </Link></Button>
-        </div>
-    );
-}
 
-function Whisky() {
-    return (
-        <div>
-            Whisky
-            <Button><Link to="/agua"> Va para agua </Link></Button>
-        </div>
-    );
-}
-
-function Agua(props) {
-    return (
-        <div>
-        Agua de coco
-            <Link to="/"> Voltar para tela inicial </Link>
-        </div>
-    );
-}
 
 
