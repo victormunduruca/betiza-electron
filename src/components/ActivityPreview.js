@@ -1,5 +1,6 @@
 import React from "react";
 import {Button} from "antd";
+import { Link } from "react-router-dom";
 
 export default function ActivityPreview(props) {
     //receive name and key
@@ -8,7 +9,7 @@ export default function ActivityPreview(props) {
         <div>
             {props.name}
             <Button onClick={() => props.onClickedEdit(props.name, props.id)}>Editar</Button>
-            <Button onClick={() => props.onClickedView(props.name, props.id)}>Visualizar</Button>
+            <Button onClick={() => props.onClickedView(props.name, props.id)}><Link to="/view">Visualizar</Link></Button>
         </div>
     );
 }

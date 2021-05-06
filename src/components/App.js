@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import uuid from 'react-uuid';
 import { Layout, Button } from 'antd';
 
-import DelAgua from "./DelAgua";
-import DelWhisky from "./DelWhisky";
+
 
 import {
     HashRouter as Router,
@@ -29,6 +28,7 @@ const basePath = app.getAppPath("appData");
 export default function App() {
     let activitiesFolder = path.join(basePath, "activities");
     let loadedActivities = [];
+    const [selectedActivity, setSelectedActivity] = useState(); //Sets selected activity used in edit / view actions
 
     if (!fs.existsSync(activitiesFolder)) fs.mkdirSync(activitiesFolder); //Creates activities path if it doesn't exist in userDatas folder
 
@@ -54,23 +54,36 @@ export default function App() {
         return activity;
     }
 
+    function onClickedView(activityName, activityKey) {
+       // setSelectedActivity("robson");
+        let activity = readActivity(activityName, activityKey);
+        setSelectedActivity(activity);
+        // console.log(activity);
+        //read questions
+        //go to QuizViewer, on router 
+    }
+
+    function onClickedEdit(activityName, activityKey) {
+        //read questions
+        //got to QuizCreator, on react router
+    }
 
     return (
             <Router>
                 <Link to="/">Home</Link>
                 <Link to="/whisky">whisky</Link>
                 <Link to="/agua">agua</Link>
-
+                <Button onClick={() => setSelectedActivity("sheila")}>Set Sheila</Button>
 
                 <Switch>
                     <Route exact path="/">
-                        <ActivityCreator loadedActivities={loadedActivities}/>
+                        <ActivityCreator loadedActivities={loadedActivities} onClickedView={onClickedView} onClickedEdit={onClickedEdit}/>
                     </Route>
                     <Route path="/create">
-                        <QuizCreator /> 
+                        <QuizCreator/> 
                     </Route>
-                    <Route path="/agua">
-                        <Agua />
+                    <Route path="/view">
+                        {selectedActivity ? <QuizPlayer questions={selectedActivity}/> : null}
                     </Route>
                 </Switch>
             </Router>

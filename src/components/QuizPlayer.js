@@ -36,6 +36,7 @@ function QuizPlayer(props) {
 
     return (
         <div>
+            Isso aqui é o quiz player 
             <QuizElement sweepId = {0} type = {currentQuestion.stimulusType} clickable = {false} value = {currentQuestion.stimulus} focusedItem = {focusItem} />
             <Row gutter={[16, 16]}>
                 <Col className="gutter-row" span={12}>

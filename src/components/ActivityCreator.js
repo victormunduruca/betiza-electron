@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import { Button, PageHeader, Layout } from "antd";
 import Activity from "./ActivityPreview";
 import uuid from "react-uuid";
@@ -23,17 +23,6 @@ export default function ActivityCreator(props) {
 
 
 
-    function onClickedView(activityName, activityKey) {
-        // let activity = readActivity(activityName, activityKey);
-        // console.log(activity);
-        //read questions
-        //go to QuizViewer, on router 
-    }
-
-    function onClickedEdit(activityName, activityKey) {
-        //read questions
-        //got to QuizCreator, on react router
-    }
 
 
     return (
@@ -45,7 +34,7 @@ export default function ActivityCreator(props) {
             
             <Content>
                 <Link to="/create">Criar Nova Atividade</Link>
-                {props.loadedActivities.map((activity) => <Activity name={activity.name} key={activity.key} id={activity.key} onClickedView={onClickedView} onClickedEdit={onClickedEdit}/>)}
+                {props.loadedActivities.map((activity) => <Activity name={activity.name} key={activity.key} id={activity.key} onClickedView={props.onClickedView} onClickedEdit={props.onClickedEdit}/>)}
             </Content>
         </Layout>
     );
