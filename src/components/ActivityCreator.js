@@ -1,6 +1,7 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import { Link , useHistory} from "react-router-dom";
 import { Button, PageHeader, Layout } from "antd";
+import { PlusOutlined } from '@ant-design/icons';
 import Activity from "./ActivityPreview";
 import uuid from "react-uuid";
 
@@ -16,7 +17,7 @@ const fs = window.require('fs');
 
 
 export default function ActivityCreator(props) {
-
+    const history = useHistory();
     return (
         <Layout>
             <PageHeader
@@ -25,8 +26,8 @@ export default function ActivityCreator(props) {
             />
             
             <Content>
-                <Link to="/create">Criar Nova Atividade</Link>
-                {props.loadedActivities.map((activity) => <Activity name={activity.name} key={activity.key} id={activity.key} onClickedView={props.onClickedView} onClickedEdit={props.onClickedEdit}/>)}
+                {props.loadedActivities.map((activity) => <Activity name={activity.name} key={activity.key} id={activity.key} onClickedView={props.onClickedView} onClickedEdit={props.onClickedEdit} onClickedDelete={props.onClickedDelete}/>)}
+                <Button type="primary" icon={<PlusOutlined />} onClick={() => history.push("/create")}>Criar Nova Atividade</Button>
             </Content>
         </Layout>
     );

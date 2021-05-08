@@ -1,3 +1,39 @@
 .ant-checkbox {
     border-radius: 100%;
 }
+
+.creation-area {
+    padding: 10px 20px;
+}
+
+.type-selector {
+    margin-bottom: 10px;
+}
+
+.side-bar-button {
+    margin-left: 13px;
+    margin-top: 20px;
+}
+
+.side-bar-title {
+    margin: 28px 0 24px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.stimulus-creator {
+    margin-bottom: 24px;
+}
+
+.type-selector {
+    margin-bottom: 10px;
+    margin-top: -4px;
+}
+
+.ant-layout-content, .ant-layout{
+    background-color: white;
+}
+
+.site-page-header {
+    border: 1px solid rgb(235, 237, 240);
+}

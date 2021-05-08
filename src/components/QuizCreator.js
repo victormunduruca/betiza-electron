@@ -9,7 +9,7 @@ import SideBar from "./SideBar";
 import StimulusCreationArea from "./StimulusCreationArea";
 
 import {
-    Link
+    Link, useHistory
 } from "react-router-dom";
 
 
@@ -44,6 +44,8 @@ export default function QuizCreator(props) {
 
     const [correctStates, setCorrectStates] = useState([false, false, false, false]); //Keeps an array with the value of checkboxes (correct answers or not)
 
+    const history = useHistory();
+    
     function addQuestion() {
         //create new question component
         let newQuestionKey = uuid();
@@ -67,7 +69,7 @@ export default function QuizCreator(props) {
 
     //Things to run in the start of the program
     useEffect(() => {
-        if(props.create) setIsModalVisible(true); //Show activity name modal in create mode
+        //if(props.create) setIsModalVisible(true); //Show activity name modal in create mode
         onSelectedQuestionChange(startingQuestions[0]); //Loads questions from file if applicable TODO trocar
     }, []); 
 
@@ -126,10 +128,10 @@ export default function QuizCreator(props) {
         <Layout>
             <PageHeader
                 ghost={false}
-                onBack={() => window.history.back()}
+                onBack={() => history.push("/")}
                 title={activityName}
+                className="site-page-header"
                 extra={[
-                    <Button key="2">Visualizar</Button>,
                     <Button key="1" 
                             type="primary" 
                             onClick={() => {
@@ -141,8 +143,8 @@ export default function QuizCreator(props) {
                 ]}
             />
             <Layout>
-                <SideBar questions={questions} onAddQuestion={addQuestion} onSelectedQuestionChange={onSelectedQuestionChange} selectedQuestionKey={selectedQuestionKey}/>
-                <Content>
+                <SideBar className="site-page-header" theme="dark" questions={questions} onAddQuestion={addQuestion} onSelectedQuestionChange={onSelectedQuestionChange} selectedQuestionKey={selectedQuestionKey}/>
+                <Content className="creation-area">
                     <StimulusCreationArea 
                         onStimulusChange={onStimulusChange} 
                         value={stimulusContent} 

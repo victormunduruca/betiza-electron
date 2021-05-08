@@ -30,6 +30,8 @@ export default function App() {
     const [loadedActivities, setLoadedActivities] = useState(loadActivities());
     const [selectedActivity, setSelectedActivity] = useState(); //Sets selected activity used in edit / view actions
 
+
+
     if (!fs.existsSync(activitiesFolder)) fs.mkdirSync(activitiesFolder); //Creates activities path if it doesn't exist in userDatas folder
 
     function loadActivities() {
@@ -47,7 +49,7 @@ export default function App() {
     function readActivity(activityName, activityKey) {
         let activity, rawdata;
         try {
-            let activityPath = path.join(activitiesFolder, activityKey + "*" + activityName + ".json")
+            let activityPath = getActivityPath(activityKey, activityName);
             rawdata = fs.readFileSync(activityPath);
             activity = JSON.parse(rawdata);
         } catch {
@@ -58,7 +60,6 @@ export default function App() {
     }
 
     function onClickedView(activityName, activityKey) {
-       // setSelectedActivity("robson");
         let activity = readActivity(activityName, activityKey);
         setSelectedActivity({questions: activity, name: activityName, key: activityKey});
     }
@@ -66,25 +67,32 @@ export default function App() {
     function onClickedEdit(activityName, activityKey) {
         let activity = readActivity(activityName, activityKey);
         setSelectedActivity({questions: activity, name: activityName, key: activityKey});
-        //got to QuizCreator, on react router
     }
 
     function onClickedSave(questionsString, activityName, activityKey) {
         let key;
         activityKey ? key = activityKey : uuid(); //if theres a key (view or edit), use it, otherwise create uuid
-        let newActivityPath = path.join(activitiesFolder, key + "*" + activityName + ".json"); // sets the new activity path
+        let newActivityPath = getActivityPath(key, activityName); // sets the new activity path
         fs.writeFileSync(newActivityPath, questionsString); // saves the new activity
-        setLoadedActivities(loadActivities());
+        setLoadedActivities(loadActivities()); //refresh
+    }
+
+    function onClickedDelete(activityName, activityKey) {
+        fs.unlinkSync(getActivityPath(activityKey, activityName));
+        setLoadedActivities(loadActivities()); //refresh
+    }
+
+    function getActivityPath(activityKey, activityName) {
+        return path.join(activitiesFolder, activityKey + "*" + activityName + ".json");
     }
 
     //TODO Loading page
     return (
             <Router>
-                <Link to="/">Home</Link>
 
                 <Switch>
                     <Route exact path="/">
-                        <ActivityCreator loadedActivities={loadedActivities} onClickedView={onClickedView} onClickedEdit={onClickedEdit}/>
+                        <ActivityCreator loadedActivities={loadedActivities} onClickedView={onClickedView} onClickedEdit={onClickedEdit} onClickedDelete={onClickedDelete}/>
                     </Route>
                     <Route path="/create">
                         <QuizCreator onClickedSave={onClickedSave} create/> 

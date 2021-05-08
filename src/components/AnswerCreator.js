@@ -11,7 +11,7 @@ export default function AnswerCreator(props){
         case "text":
             answer =    <Card className="text-answer" bordered={true}>
                             <Checkbox onChange={props.onCorrectAnswerChange} checked={props.checkboxValue}></Checkbox> 
-                            <Input placeholder="Basic usage" onChange={(e) => props.onChange(e.target.value)} value={props.value}/>
+                            <Input placeholder="Resposta em texto" onChange={(e) => props.onChange(e.target.value)} value={props.value}/>
                         </Card>
             break;
         case "image":
