@@ -69,7 +69,7 @@ export default function QuizCreator(props) {
 
     //Things to run in the start of the program
     useEffect(() => {
-        //if(props.create) setIsModalVisible(true); //Show activity name modal in create mode
+        if(props.create) setIsModalVisible(true); //Show activity name modal in create mode
         onSelectedQuestionChange(startingQuestions[0]); //Loads questions from file if applicable TODO trocar
     }, []); 
 

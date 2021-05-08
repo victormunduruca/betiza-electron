@@ -89,7 +89,7 @@ export default function App() {
     //TODO Loading page
     return (
             <Router>
-
+                <Link to="/">Panic</Link>
                 <Switch>
                     <Route exact path="/">
                         <ActivityCreator loadedActivities={loadedActivities} onClickedView={onClickedView} onClickedEdit={onClickedEdit} onClickedDelete={onClickedDelete}/>

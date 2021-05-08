@@ -4,8 +4,8 @@ import { Card } from 'antd';
 let isActive = false;
 
 export default function QuizElement(props) {
-    const defaultStyle = {borderColor: "white"};
-    const active = {borderColor: "green"};
+    const defaultStyle = {borderColor: "rgb(235, 237, 240)", display: "flex", justifyContent: "center"};
+    const active = {borderColor: "rgb(53, 189, 89)", display: "flex", justifyContent: "center"};
     let style = defaultStyle;
     let audio;
 
@@ -40,20 +40,19 @@ export default function QuizElement(props) {
     let  quizElement;
     switch(props.type) {
         case "text":
-            quizElement =    <Card className="text-answer" bordered={true} style={style}>
+            quizElement =    <div className="answer-item" style={style}>
                                 <div className="text-answer-type">{props.value}</div>
-                            </Card>
+                            </div>
             break;
         case "image":
-            quizElement =    <Card className="answer-item" bordered={true} style={style} focusedItem={props.focusedItem}>
-                                <img src={props.value} style={{wsweepIdth: "100%"}}></img>
-                                {props.test}
-                            </Card>;
+            quizElement =    <div className="answer-item" style={style}>
+                                <img src={props.value} className="responsive-image"></img>
+                            </div>;
             break
         case "sound":
-            quizElement =    <Card className="answer-item" bordered={true} style={style}>
+            quizElement =    <div className="answer-item" style={style}>
                                playIcon
-                            </Card>;
+                            </div>;
             break
     }
 

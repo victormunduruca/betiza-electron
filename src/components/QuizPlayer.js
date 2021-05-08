@@ -35,18 +35,17 @@ function QuizPlayer(props) {
     }
 
     return (
-        <div>
-            Isso aqui é o quiz player 
-            <QuizElement sweepId = {0} type = {currentQuestion.stimulusType} clickable = {false} value = {currentQuestion.stimulus} focusedItem = {focusItem} />
-            <Row gutter={[16, 16]}>
+        <div className="quiz-player-container">
+            <div style={{marginBottom: "32px"}}>
+                <QuizElement sweepId = {0} type = {currentQuestion.stimulusType} clickable = {false} value = {currentQuestion.stimulus} focusedItem = {focusItem}/>
+            </div>
+            <Row gutter={[16, 4]}>
                 <Col className="gutter-row" span={12}>
                     <QuizElement sweepId = {1} answerId = {0} clickable onElementClicked = {onElementClicked} type = {currentQuestion.answerType} value = {currentQuestion.answers[0].value} focusedItem = {focusItem} />
                 </Col>
                 <Col className="gutter-row" span={12}>
                     <QuizElement sweepId = {2} answerId = {1} clickable onElementClicked = {onElementClicked} type = {currentQuestion.answerType} value = {currentQuestion.answers[1].value} focusedItem = {focusItem} />
                 </Col>
-            </Row>
-            <Row gutter={[16, 16]}>
                 <Col className="gutter-row" span={12}>
                     <QuizElement sweepId = {3} answerId = {2} clickable onElementClicked = {onElementClicked} type = {currentQuestion.answerType} value = {currentQuestion.answers[2].value} focusedItem = {focusItem} />
                 </Col>
