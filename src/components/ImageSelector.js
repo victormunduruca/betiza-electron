@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "antd";
 
 
@@ -6,8 +6,7 @@ const fs = window.require('fs');
 const { dialog } = window.require("electron").remote;
 
 export default function ImageSelector(props) {
-    const [filePath, setFilePath] = useState(""); 
-   // const [img64, setImg64] = useState("");
+    const [filePath, setFilePath] = useState("");
 
     function openDialog() {
         dialog.showOpenDialog({
@@ -21,15 +20,14 @@ export default function ImageSelector(props) {
         })
     }
     useEffect(() => {
-        if(filePath !== "") {
-            //setImg64(fs.readFileSync(filePath[0]).toString('base64'));
+        if (filePath !== "") {
             props.onImageReady("data:image/png;base64," + fs.readFileSync(filePath[0]).toString('base64')); //Calls back functon when ready, with image src as content
         }
     }, [filePath]);
     return (
         <div className="image-selector">
+            {props.value != "" ? <img src={props.value} className="image-thumb" style={{ marginBottom: "16px" }}></img> : ""}
             <Button onClick={openDialog}> Clique para selecionar imagem</Button>
-            {props.value != "" ? <img src={props.value} className="image-thumb" style={{marginTop: "16px"}}></img> : ""}
         </div>
     );
 }

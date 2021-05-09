@@ -1,7 +1,9 @@
 import React, { useState, useEffect }from "react";
+import { useHistory } from "react-router-dom";
+
 import { message, Card, Row, Col, Switch } from 'antd';
 import QuizElement from "./QuizElement";
-import { SmileTwoTone , MehTwoTone} from '@ant-design/icons';
+import { SmileTwoTone , MehTwoTone, CrownTwoTone} from '@ant-design/icons';
 
 
 
@@ -11,10 +13,13 @@ function QuizPlayer(props) {
 
     const [currentQuestion, setCurrentQuestion] = useState(props.questions[0]); //sets the first question as current one
     const [isSweepPaused, setIsSweepPaused] = useState(false);
+    const history = useHistory(); //Used to go back to home after quiz is finished
 
-    currentQuestion.stimulusType == "sound" ? startSweepId = 0 : startSweepId = 1;
+   currentQuestion.stimulusType == "sound" ? startSweepId = 0 : startSweepId = 1;
+    
     
     const [focusItem, setfocusItem] = useState(startSweepId);
+
     useEffect(() => {
         const interval = setInterval(() => {
             if(!isSweepPaused)
@@ -29,7 +34,7 @@ function QuizPlayer(props) {
         if(answerId == currentQuestion.correctAnswerKey) { // Check if answer was correct 
             setIsSweepPaused(true)
             message.success({
-                content:  "Boaa! você acertou",
+                content:  "Boaa! você acertou.",
                 className: "feedback-message",
                 icon: <SmileTwoTone style={{fontSize: "5rem"}} twoToneColor="#52c41a"/>,
                 duration: 2,
@@ -37,9 +42,16 @@ function QuizPlayer(props) {
             .then(() => {
                 let currentIndex = props.questions.indexOf(currentQuestion);
                 console.log(currentIndex);
-                if(currentIndex < props.questions.length) {
+                if(currentIndex < props.questions.length - 1) {
                     console.log(props.questions.length);
                     setCurrentQuestion(props.questions[currentIndex + 1]);
+                } else {
+                    message.success({
+                        content:  "Parabéens, você terminou o quiz!",
+                        className: "feedback-message",
+                        icon: <CrownTwoTone style={{fontSize: "5rem"}} twoToneColor="#fce33f"/>,
+                        duration: 2,
+                    }).then(() => history.push("/"));
                 }
                 setIsSweepPaused(false)
                 setfocusItem(startSweepId);
@@ -53,11 +65,7 @@ function QuizPlayer(props) {
                 duration: 1,
             }).then(() => setIsSweepPaused(false));
         }
-        //Give feedback and go to next question
-    }
 
-    const correctAnswerMessage = () => {
-        message.success('Você acertou, cumpade!');
     }
 
     return (
