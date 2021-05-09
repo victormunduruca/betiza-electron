@@ -60,6 +60,8 @@ function QuizPlayer(props) {
                 if(currentIndex < props.questions.length - 1) {
                     console.log(props.questions.length);
                     setCurrentQuestion(props.questions[currentIndex + 1]);
+                    setIsSweepPaused(false)
+                    setfocusItem(startSweepId);
                 } else {
                     message.success({
                         content:  "Parabéens, você terminou a atividade!",
@@ -68,8 +70,6 @@ function QuizPlayer(props) {
                         duration: 2,
                     }).then(() => history.push("/"));
                 }
-                setIsSweepPaused(false)
-                setfocusItem(startSweepId);
             })
         } else {
             setIsSweepPaused(true)
