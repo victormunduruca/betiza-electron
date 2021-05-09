@@ -1,37 +1,63 @@
 import React, { useState, useEffect }from "react";
-import { Card, Row, Col, Switch } from 'antd';
+import { message, Card, Row, Col, Switch } from 'antd';
 import QuizElement from "./QuizElement";
+import { SmileTwoTone , MehTwoTone} from '@ant-design/icons';
+
+
+
 
 function QuizPlayer(props) {
     let startSweepId;
-    let currentQuestionIndex = 0; //TODO Delete
 
-    const [currentQuestion, setCurrentQuestion] = useState(props.activity.questions[0]); //sets the first question as current one
+    const [currentQuestion, setCurrentQuestion] = useState(props.questions[0]); //sets the first question as current one
+    const [isSweepPaused, setIsSweepPaused] = useState(false);
 
     currentQuestion.stimulusType == "sound" ? startSweepId = 0 : startSweepId = 1;
     
     const [focusItem, setfocusItem] = useState(startSweepId);
     useEffect(() => {
         const interval = setInterval(() => {
-            setfocusItem(focusItem == 4 ? startSweepId : focusItem + 1);
+            if(!isSweepPaused)
+                setfocusItem(focusItem == 4 ? startSweepId : focusItem + 1);
         }, 1000);
         return () => clearInterval(interval);
-      }, [focusItem, setfocusItem]);
+      }, [focusItem, setfocusItem, isSweepPaused]);
 
+    
 
     function onElementClicked(answerId) {
         if(answerId == currentQuestion.correctAnswerKey) { // Check if answer was correct 
-            console.log("Uhuuuul resposta correta");
-            let currentIndex = props.questions.indexOf(currentQuestion);
-            console.log(currentIndex);
-            if(currentIndex < props.questions.length) {
-                console.log(props.questions.length);
-                setCurrentQuestion(props.questions[currentIndex + 1]);
-            }
+            setIsSweepPaused(true)
+            message.success({
+                content:  "Boaa! você acertou",
+                className: "feedback-message",
+                icon: <SmileTwoTone style={{fontSize: "5rem"}} twoToneColor="#52c41a"/>,
+                duration: 2,
+            })
+            .then(() => {
+                let currentIndex = props.questions.indexOf(currentQuestion);
+                console.log(currentIndex);
+                if(currentIndex < props.questions.length) {
+                    console.log(props.questions.length);
+                    setCurrentQuestion(props.questions[currentIndex + 1]);
+                }
+                setIsSweepPaused(false)
+                setfocusItem(startSweepId);
+            })
         } else {
-            console.log("Oppsss errou");
+            setIsSweepPaused(true)
+            message.error({
+                content: "Ops, resposta errada.",
+                className: "feedback-message",
+                icon: <MehTwoTone style={{fontSize: "5rem"}} twoToneColor="#FF2F3A"/>,
+                duration: 1,
+            }).then(() => setIsSweepPaused(false));
         }
         //Give feedback and go to next question
+    }
+
+    const correctAnswerMessage = () => {
+        message.success('Você acertou, cumpade!');
     }
 
     return (

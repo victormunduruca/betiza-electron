@@ -98,7 +98,7 @@ export default function App() {
                         <QuizCreator onClickedSave={onClickedSave} create/> 
                     </Route>
                     <Route path="/view">
-                        {selectedActivity ? <QuizPlayer activity={selectedActivity}/> : null} 
+                        {selectedActivity ? <QuizPlayer questions={selectedActivity.questions}/> : null} 
                     </Route>
                     <Route path="/edit">
                         {selectedActivity ? <QuizCreator activity={selectedActivity} onClickedSave={onClickedSave}/> : null} 

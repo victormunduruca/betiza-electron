@@ -54,7 +54,7 @@
     max-width: 600px;
     border: green;
     padding: 16px;
-    border-top: 1px solid rgb(235, 237, 240);
+    /* border-top: 1px solid rgb(235, 237, 240); */
     border-bottom: 1px solid rgb(235, 237, 240);
     margin-left: 24px;
 }
@@ -89,4 +89,10 @@
 
 .quiz-player-container {
     margin: 48px 32px; 
+}
+
+.feedback-message {
+    margin-top: 10vh;
+    font-size: 1.5rem;
+    padding: 0.4rem;
 }

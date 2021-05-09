@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { Card } from 'antd';
+import { PlaySquareTwoTone } from '@ant-design/icons';
 
 let isActive = false;
 
 export default function QuizElement(props) {
     const defaultStyle = {borderColor: "rgb(235, 237, 240)", display: "flex", justifyContent: "center"};
-    const active = {borderColor: "rgb(53, 189, 89)", display: "flex", justifyContent: "center"};
+    const active = {borderColor: "#0086FF", display: "flex", justifyContent: "center"};
     let style = defaultStyle;
     let audio;
 
@@ -23,9 +24,9 @@ export default function QuizElement(props) {
     }
   
     function isFocused() {
-        if(props.focusedItem == null) { //In case it's not in sweep
-            return false;
-        }
+        // if(props.focusedItem == null) { //In case it's not in sweep
+        //     return false;
+        // }
         return props.focusedItem == props.sweepId;
     }
 
@@ -51,7 +52,7 @@ export default function QuizElement(props) {
             break
         case "sound":
             quizElement =    <div className="answer-item" style={style}>
-                               playIcon
+                               <PlaySquareTwoTone style={{fontSize: "5rem"}}/>
                             </div>;
             break
     }
