@@ -17,7 +17,7 @@ function QuizPlayer(props) {
     const history = useHistory(); //Used to go back to home after quiz is finished
 
    currentQuestion.stimulusType == "sound" ? startSweepId = 0 : startSweepId = 1;
-    
+    console.log(startSweepId);
     
     const [focusItem, setfocusItem] = useState(startSweepId);
 
@@ -38,6 +38,7 @@ function QuizPlayer(props) {
         const interval = setInterval(() => {
             if(!isSweepPaused)
                 setfocusItem(focusItem == 4 ? startSweepId : focusItem + 1);
+
         }, 1000);
         return () => clearInterval(interval);
       }, [focusItem, setfocusItem, isSweepPaused]);

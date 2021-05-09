@@ -136,7 +136,7 @@ export default function QuizCreator(props) {
                             type="primary" 
                             onClick={() => {
                                 //if it is in create mode, send new name created with modal. If in view or edit, send read activities properties
-                                props.create ? props.onClickedSave(questionsString, activityName) : props.onClickedSave(questionsString, activityName, props.activity.key);
+                                props.create ? props.onClickedSave(questionsString, activityName, uuid()) : props.onClickedSave(questionsString, activityName, props.activity.key);
                             }}>
                        <Link to="/">Salvar Atividade</Link>
                     </Button>,
