@@ -25,9 +25,9 @@ export default function ImageSelector(props) {
         }
     }, [filePath]);
     return (
-        <div className="image-selector">
-            {props.value != "" ? <img src={props.value} className="image-thumb" style={{ marginBottom: "16px" }}></img> : ""}
-            <Button onClick={openDialog}> Clique para selecionar imagem</Button>
+        <div className="selector">
+            {props.value != undefined ? <img src={props.value} className="image-thumb" style={{ marginBottom: "16px" }}></img> : ""}
+            <Button onClick={openDialog}> Selecionar uma imagem</Button>
         </div>
     );
 }

@@ -23,7 +23,7 @@ export default function AnswerCreator(props){
         case "sound":
             answer =    <Card className="answer-item" bordered={true}>
                                 <Checkbox onChange={props.onCorrectAnswerChange} checked={props.checkboxValue}></Checkbox>
-                                <AudioSelector onAudioReady={(audioSrc) => props.onChange(audioSrc)}/>
+                                <AudioSelector onAudioReady={(audioSrc) => props.onChange(audioSrc)} value={props.value}/>
                             </Card>;
             break
     }   

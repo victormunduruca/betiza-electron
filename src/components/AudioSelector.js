@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Button } from "antd";
+import { PlaySquareTwoTone } from '@ant-design/icons';
 
 
 const fs = window.require('fs');
@@ -9,6 +10,10 @@ const path = window.require('path');
 export default function AudioSelector(props) {
     const [filePath, setFilePath] = useState(""); 
 
+    function handlePlay() { //Function used to play audio 
+        let audio = new Audio(props.value);
+        audio.play();
+    }
     function openDialog() {
         dialog.showOpenDialog({
             properties: ['openFile', 'openDirectory']
@@ -23,15 +28,19 @@ export default function AudioSelector(props) {
     useEffect(() => {
         if(filePath !== "") {
             console.log("file path ready");
-            let audio = new Audio("data:audio/mp3;base64," + fs.readFileSync(filePath[0]).toString('base64'));
-            audio.play();
             props.onAudioReady("data:audio/mp3;base64," + fs.readFileSync(filePath[0]).toString('base64'));
         }
     }, [filePath]);
     return (
-        <>
-            <Button onClick={openDialog}> Clique para selecionar um áudio</Button>
-            {filePath !== "" ? path.basename(filePath[0]) : ""}
-        </>
+        <div className="selector">
+            {props.value != undefined ? <Button ghost 
+                                    onClick={handlePlay} 
+                                    size="large" 
+                                    icon={<PlaySquareTwoTone style={{fontSize: "2rem"}}/>}
+                                    style={{marginBottom: "8px"}}
+                                >
+                                </Button> : ""}
+            <Button onClick={openDialog}> Selecionar um áudio</Button>
+        </div>
     );
 }
