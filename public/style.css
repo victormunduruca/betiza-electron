@@ -4,10 +4,6 @@ body {
   padding: 0;
 }
 
-.ant-checkbox {
-    border-radius: 100%;
-}
-
 .creation-area {
     padding: 10px 20px;
 }
@@ -106,4 +102,9 @@ body {
     margin-top: 10vh;
     font-size: 1.5rem;
     padding: 0.4rem;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+    background-color: red;
+    border-color: red;
 }
