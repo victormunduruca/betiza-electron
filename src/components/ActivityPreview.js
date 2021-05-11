@@ -22,7 +22,7 @@ export default function ActivityPreview(props) {
                     style={{ marginRight: "4px" }}>
                 </Button>
                 <Button
-                    icon={<DeleteOutlined />}
+                    icon={<DeleteOutlined color="#FF575C"/>}
                     onClick={() => props.onClickedDelete(props.name, props.id)}>
                 </Button>
             </div>

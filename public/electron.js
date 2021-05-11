@@ -49,8 +49,8 @@ function createWindow() {
 
 }
 
-try { fs.writeFileSync('myfile.txt', 'the text to write in the file', 'utf-8'); }
-catch(e) { alert('Failed to save the file !'); }
+// try { fs.writeFileSync('myfile.txt', 'the text to write in the file', 'utf-8'); }
+// catch(e) { alert('Failed to save the file !'); }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
