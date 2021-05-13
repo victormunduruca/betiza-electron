@@ -12,7 +12,7 @@ export default function Stimulus(props) {
             break;
         case "image":
             stimulus =    <Card className="answer-item" bordered={true}>
-                                <img src={props.content} style={{width: "100%"}}></img>
+                                <img src={props.content} style={{width: "100%"}} className="responsive-image"></img>
                             </Card>;
             break
     }

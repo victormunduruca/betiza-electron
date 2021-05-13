@@ -39,7 +39,7 @@ function QuizPlayer(props) {
             if(!isSweepPaused)
                 setfocusItem(focusItem == 4 ? startSweepId : focusItem + 1);
 
-        }, 1000);
+        }, 2000);
         return () => clearInterval(interval);
       }, [focusItem, setfocusItem, isSweepPaused]);
 
