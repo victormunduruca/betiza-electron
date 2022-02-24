@@ -23,7 +23,7 @@ const { dialog } = window.require("electron").remote;
 
 const { app } = window.require('electron').remote;
 const path = window.require('path');
-const basePath = app.getAppPath("appData");
+const basePath = app.getPath("appData");
 
 export default function App() {
     let activitiesFolder = path.join(basePath, "activities");
@@ -32,13 +32,15 @@ export default function App() {
 
 
 
-    if (!fs.existsSync(activitiesFolder)) fs.mkdirSync(activitiesFolder); //Creates activities path if it doesn't exist in userDatas folder
+    
 
     function loadActivities() {
+        if (!fs.existsSync(activitiesFolder)) fs.mkdirSync(activitiesFolder); //Creates activities path if it doesn't exist in userDatas folder
         let loadedActivitiesTemp = []
         fs.readdirSync(activitiesFolder).forEach(file => {
+            console.log(file);
             let fileName = path.basename(file, '.json');
-            let fields = fileName.split("*");
+            let fields = fileName.split("$");
             console.log("key: " + fields[0]);
             console.log("name: " + fields[1]);
             loadedActivitiesTemp.push({ key: fields[0], name: fields[1] });
@@ -73,8 +75,9 @@ export default function App() {
         let key;
         activityKey ? key = activityKey : uuid(); //if theres a key (view or edit), use it, otherwise create uuid
         let newActivityPath = getActivityPath(key, activityName); // sets the new activity path
-        fs.writeFileSync(newActivityPath, questionsString); // saves the new activity
+        fs.writeFileSync(getActivityPath(activityKey, activityName), questionsString); // saves the new activity
         setLoadedActivities(loadActivities()); //refresh
+        // fs.writeFileSync(path.join(activitiesFolder, "rapaztasalvando.txt"), activityName+activityKey+questionsString);
     }
 
     function onClickedDelete(activityName, activityKey) {
@@ -83,13 +86,13 @@ export default function App() {
     }
 
     function getActivityPath(activityKey, activityName) {
-        return path.join(activitiesFolder, activityKey + "*" + activityName + ".json");
+        return path.join(activitiesFolder, activityKey + "$" + activityName + ".json");
     }
 
     //TODO Loading page
     return (
             <Router>
-                <Link to="/">Panic</Link>
+                {/* <Link to="/">Panic</Link> */}
                 <Switch>
                     <Route exact path="/">
                         <ActivityCreator loadedActivities={loadedActivities} onClickedView={onClickedView} onClickedEdit={onClickedEdit} onClickedDelete={onClickedDelete}/>

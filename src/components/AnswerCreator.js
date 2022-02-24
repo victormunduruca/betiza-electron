@@ -15,13 +15,13 @@ export default function AnswerCreator(props){
                         </Card>
             break;
         case "image":
-            answer =    <Card className="answer-item" bordered={true}>
+            answer =    <Card className="answer-creation-item" bordered={true}>
                                 <Checkbox onChange={props.onCorrectAnswerChange} checked={props.checkboxValue}></Checkbox>
                                 <ImageSelector onImageReady={(imgSrc) => props.onChange(imgSrc)} value={props.value}/> 
                             </Card>;
             break
         case "sound":
-            answer =    <Card className="answer-item" bordered={true}>
+            answer =    <Card className="answer-creation-item" bordered={true}>
                                 <Checkbox onChange={props.onCorrectAnswerChange} checked={props.checkboxValue}></Checkbox>
                                 <AudioSelector onAudioReady={(audioSrc) => props.onChange(audioSrc)} value={props.value}/>
                             </Card>;

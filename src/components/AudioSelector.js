@@ -16,7 +16,7 @@ export default function AudioSelector(props) {
     }
     function openDialog() {
         dialog.showOpenDialog({
-            properties: ['openFile', 'openDirectory']
+            properties: ['openFile']
         }).then(result => {
             console.log(result)
             console.log(result.filePaths)
