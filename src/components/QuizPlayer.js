@@ -22,6 +22,7 @@ function QuizPlayer(props) {
     const [focusItem, setfocusItem] = useState(startSweepId);
 
     useEffect(() => {
+        message.info("Pressione ESC para sair do modo de visualização.");
         window.addEventListener("keydown", handleEscape);
         return () => window.removeEventListener("keydown", handleEscape);
     }, []);

@@ -13,15 +13,27 @@ export default function QuizElement(props) {
     if(props.type == "sound") audio = new Audio(props.value);  //If it is an audio element, init audio object 
 
     useEffect(() => {
-        window.addEventListener('click', handleClick);
-        return () => window.removeEventListener('click', handleClick);
-    }, [props.focusedItem, props.sweepId, handleClick]);
+        window.addEventListener('click', handleInteraction);
+        window.addEventListener('keypress', handleEnter);
+        return () => {
+            window.removeEventListener('click', handleInteraction);
+            window.removeEventListener('keypress', handleEnter);
+        };
+    }, [props.focusedItem, props.sweepId, handleInteraction]);
 
-    function handleClick() {
+    function handleInteraction() {
         if(props.focusedItem == props.sweepId && props.clickable == true) {
             props.onElementClicked(props.answerId);
         }
     }
+
+    function handleEnter(event) {
+        const keyName = event.key;
+        if(keyName == "Enter") {
+            handleInteraction();
+        }
+    }
+
   
     function isFocused() {
         // if(props.focusedItem == null) { //In case it's not in sweep
