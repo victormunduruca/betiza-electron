@@ -27,12 +27,21 @@ const basePath = app.getPath("appData");
 
 export default function App() {
     let activitiesFolder = path.join(basePath, "activities");
+    let settingsFolder = path.join(activitiesFolder, "settings");
+
     const [loadedActivities, setLoadedActivities] = useState(loadActivities());
     const [selectedActivity, setSelectedActivity] = useState(); //Sets selected activity used in edit / view actions
+    const [loadedSettings, setLoadedSettings] = useState(loadSettings());
 
 
 
-    
+    function loadSettings() {
+        if (!fs.existsSync(settingsFolder)) { //Creates activities path if it doesn't exist in userDatas folder 
+            fs.mkdirSync(settingsFolder);
+            fs.writeFileSync(path.join(activitiesFolder,"settings.json"), {sweepSpeed: 2000});
+        } 
+        return fs.readFileSync(path.join(activitiesFolder,"settings.json"));
+    }
 
     function loadActivities() {
         if (!fs.existsSync(activitiesFolder)) fs.mkdirSync(activitiesFolder); //Creates activities path if it doesn't exist in userDatas folder
@@ -84,6 +93,12 @@ export default function App() {
         fs.unlinkSync(getActivityPath(activityKey, activityName));
         setLoadedActivities(loadActivities()); //refresh
     }
+    
+
+    function onClickedSaveSettings(quizSweepSpeed) {
+        // save the newly set sweep speed on the disk
+        fs.writeFileSync(path.join(settingsFolder,"settings.json"), {sweepSpeed: quizSweepSpeed});
+    }
 
     function getActivityPath(activityKey, activityName) {
         return path.join(activitiesFolder, activityKey + "$" + activityName + ".json");
@@ -95,7 +110,7 @@ export default function App() {
                 {/* <Link to="/">Panic</Link> */}
                 <Switch>
                     <Route exact path="/">
-                        <ActivityCreator loadedActivities={loadedActivities} onClickedView={onClickedView} onClickedEdit={onClickedEdit} onClickedDelete={onClickedDelete}/>
+                        <ActivityCreator loadedActivities={loadedActivities} loadedSettings={{sweepSpeed: 2000}} onClickedView={onClickedView} onClickedEdit={onClickedEdit} onClickedDelete={onClickedDelete} onClickedSaveSettings={onClickedSaveSettings}/>
                     </Route>
                     <Route path="/create">
                         <QuizCreator onClickedSave={onClickedSave} create/> 
