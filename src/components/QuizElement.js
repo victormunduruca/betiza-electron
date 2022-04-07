@@ -6,7 +6,7 @@ let isActive = false;
 
 export default function QuizElement(props) {
     const defaultStyle = {borderColor: "rgb(235, 237, 240)", display: "flex", justifyContent: "center"};
-    const active = {borderColor: "#5E3866", display: "flex", justifyContent: "center"};
+    const active = {borderColor: "#5eff76", display: "flex", justifyContent: "center"};
     let style = defaultStyle;
     let audio;
 
