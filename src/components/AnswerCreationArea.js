@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Row, Col , Typography} from "antd";
+import { Row, Col , Typography, Alert} from "antd";
 import AnswerCreator from "./AnswerCreator";
 import TypeSelector from "./TypeSelector";
 
@@ -23,6 +23,8 @@ export default function AnswerCreationArea(props) {
                         value={props.value[0]} 
                         onCorrectAnswerChange={(e) => props.onCorrectAnswerChange(e.target.checked, 0)} 
                         checkboxValue={props.correctStates[0]}
+                        errorState={props.errorState}
+                        errorExample
                     />
                 </Col>
                 <Col className="gutter-row" span={12}>
