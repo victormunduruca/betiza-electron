@@ -35,12 +35,13 @@ function QuizPlayer(props) {
         }
     }
 
+
     useEffect(() => {
         const interval = setInterval(() => {
             if(!isSweepPaused)
                 setfocusItem(focusItem == 4 ? startSweepId : focusItem + 1);
-
-        }, 2000);
+            console.log(props.sweepSpeed)
+        }, props.sweepSpeed);
         return () => clearInterval(interval);
       }, [focusItem, setfocusItem, isSweepPaused]);
 

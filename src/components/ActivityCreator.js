@@ -21,9 +21,11 @@ export default function ActivityCreator(props) {
     const [sweepSpeed, setSweepSpeed] = useState(props.loadedSettings.sweepSpeed);
 
     function handleSaveSettings(){
+        console.log("Saved sweepspeed:" +sweepSpeed)
         props.onClickedSaveSettings(sweepSpeed);
         setIsSettingsVisible(false);
     }
+
     return (
         <Layout style={{backgroundColor: "white"}}>
             <PageHeader
@@ -35,7 +37,8 @@ export default function ActivityCreator(props) {
                 ]}
             />
             <Modal title="Configurações" visible={isSettingsVisible} onOk={handleSaveSettings} onCancel={() => setIsSettingsVisible(false)}>
-                <Input size="large" value={sweepSpeed} onChange={(e) => setSweepSpeed(e.value)}/> 
+                
+                <Input size="large" value={sweepSpeed} onChange={(e) => setSweepSpeed(e.target.value)}/> 
             </Modal>
             
             <Content style={{marginTop: "16px"}}>
