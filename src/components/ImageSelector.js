@@ -10,14 +10,14 @@ export default function ImageSelector(props) {
 
     function openDialog() {
         dialog.showOpenDialog({
-            properties: ['openFile']
-        }, 
-        {filters: [
-            { name: 'Images', extensions: ['jpg', 'png', 'gif'] },
+            properties: ['openFile'],
+            filters: [
+            { name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'gif'] }
         ]}).then(result => {
             console.log(result.canceled)
             console.log(result.filePaths)
-            setFilePath(result.filePaths)
+            if(!result.canceled)
+                setFilePath(result.filePaths)
         }).catch(err => {
             console.log(err)
         })
